@@ -1,22 +1,19 @@
-from apify_client import ApifyClient
+from lat_long_crawler import get_nearby_place_from_google_map
 
-# Initialize the ApifyClient with your API token
-client = ApifyClient('apify_api_yN2quOuiW0Rg1d6gfrQfd0ceZDnhrG1S4OG7')
+# read gowalla dataset file which is a text file seperated by space
+with open('loc-gowalla_totalCheckins.txt', 'r') as f:
+    count = 0
+    lines = f.readlines()
+    for line in lines:
+        line = line.strip()
+        line = line.split('\t')
+        lat = line[2]
+        long = line[3]
+        nearby_places = get_nearby_place_from_google_map(lat, long)
+        print(nearby_places)
 
-# Prepare the actor input
-run_input = {
-    "searchStringsArray": ["restaurant New York"],
-    "allPlacesNoSearchAction": "mouse",
-    "maxCrawledPlaces": 10,
-    "language": "en",
-    "maxImages": 0,
-    "maxReviews": 0,
-    "proxyConfig": { "useApifyProxy": True },
-}
+        count += 1
+        if count == 10:
+            break
 
-# Run the actor and wait for it to finish
-run = client.actor("drobnikj/crawler-google-places").call(run_input=run_input)
-
-# Fetch and print actor results from the run's dataset (if there are any)
-for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-    print(item)
+    f.close()
