@@ -36,7 +36,7 @@ def get_nearby_place_from_google_map(lat, long):
     # get the nearby places from the map
     for i in range(0, 200, 40):
         ActionChains(driver).move_by_offset(100 - i, 100 - i).click().perform()
-        ActionChains(driver).move_by_offset(-(100 - i), -(100 - i)).pause(1).perform()
+        ActionChains(driver).move_by_offset(-(100 - i), -(100 - i)).perform()
         time.sleep(0.1)
         if driver.title != 'Google 地圖':
             print(driver.title)
@@ -44,7 +44,7 @@ def get_nearby_place_from_google_map(lat, long):
 
     for i in range(0, 200, 40):
         ActionChains(driver).move_by_offset(100 + i, 100 - i).click().perform()
-        ActionChains(driver).move_by_offset(-(100 + i), -(100 - i)).pause(1).perform()
+        ActionChains(driver).move_by_offset(-(100 + i), -(100 - i)).perform()
         time.sleep(0.1)
         if driver.title != 'Google 地圖':
             print(driver.title)
@@ -52,7 +52,7 @@ def get_nearby_place_from_google_map(lat, long):
 
     for i in range(0, 200, 40):
         ActionChains(driver).move_by_offset(100 - i, 100 + i).click().perform()
-        ActionChains(driver).move_by_offset(-(100 - i), -(100 + i)).pause(1).perform()
+        ActionChains(driver).move_by_offset(-(100 - i), -(100 + i)).perform()
         time.sleep(0.1)
         if driver.title != 'Google 地圖':
             print(driver.title)
