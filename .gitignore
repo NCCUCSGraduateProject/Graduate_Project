@@ -1,2 +1,7 @@
 *.txt
 *.pyc
+*.pyo
+
+constants.py
+
+__pycache__
