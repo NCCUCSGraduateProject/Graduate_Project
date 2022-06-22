@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-const jsonData= require('./ruins200.json'); 
+const jsonData= require('./250.json'); 
 console.log(jsonData);
 // Connect to the db
 MongoClient.connect("mongodb://localhost:27017",function(err, client){
@@ -8,7 +8,7 @@ MongoClient.connect("mongodb://localhost:27017",function(err, client){
  
     const db = client.db('placeAPI');
  
-    objs = jsonData.results;
+    objs = jsonData;
 
     db.collection('test066').insertMany(objs, (err)=>{
         if(err) 
