@@ -8,9 +8,7 @@ import constant
 #   lat: int, no default
 #   lon: int, no default
 #
-# returns a tuple (a,b) 
-#   a is a list of restaurant names
-#   b is a list of informations about each restautant in Json format
+# returns a list of informations about each restautant in Json format
 
 def getLocation(lat, lon, radius = 200):
     
@@ -29,12 +27,10 @@ def getLocation(lat, lon, radius = 200):
     responseJSON = json.loads(response.text)
     resultList = responseJSON["results"]
 
-    restaurantNames = [ i['name'] for i in responseJSON["results"] ] 
-
     # Maximum number of pages ( prevent from infinite while loop )
     queryCount, MAX_QUERY_LENGTH = 2, 10
 
-    # the while loop below continously queries the rest of the request
+    # the while loop below continously queries the rest data of the request
     # query at most 10 times
     # at most 20 places in a single query
     # next page token is a token that stores the next 20 places if they exist
@@ -59,11 +55,9 @@ def getLocation(lat, lon, radius = 200):
         else:
             print("success")
 
-        for i in responseJSON["results"]:
-            restaurantNames.append(i['name'])
         queryCount += 1
 
-    return restaurantNames, resultList
+    return  resultList
 
 if __name__ == "__main__":
     lat, lon = 24.9870522,121.575362

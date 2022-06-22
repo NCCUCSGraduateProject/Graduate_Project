@@ -12,16 +12,16 @@ radius = 250
 #   lon: int, no default
 #   radius: int, default = "200"
 #
-# returns a tuple (a,b) 
-#   a is a list of restaurant names
-#   b is a list of informations about each restautant in Json format
-restaurantNames, resultList = placesQuery.getLocation(24.9870522,121.575362,radius)
+# returns  a list of informations about each restautant in Json format
+resultList = placesQuery.getLocation(24.9870522,121.575362,radius)
 
 # save the results into files
-with open(os.path.join('results/name',str(radius)+'.txt'), 'w') as f:
-    for item in restaurantNames:
-        f.write("%s\n" % item)
-
         
 with open(os.path.join('results',str(radius)+'.json'), 'w') as f:
     f.write(json.dumps(resultList))
+
+
+# print the names and ratings of the places got from query
+
+for i in resultList:
+    print(i["name"])
