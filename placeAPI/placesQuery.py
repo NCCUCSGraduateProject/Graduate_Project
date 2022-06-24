@@ -14,7 +14,7 @@ def getLocation(lat, lon, radius = 200):
     
     location = str(lat) + ',' + str(lon) 
 
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius="+str(radius)+"&type=restaurant&key="+constant.API_KEY
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius="+str(radius)+"&type=restaurant&language=zh-TW&key="+constant.API_KEY
 
     payload={}
     headers = {}
