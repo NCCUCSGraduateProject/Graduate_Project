@@ -1,7 +1,9 @@
+from unittest import result
 import requests
 import json
 import time
 import constant
+from math import sqrt
 
 # parameters: 
 #   radius: int, default = "200"
@@ -59,7 +61,40 @@ def getLocation(lat, lon, radius = 200):
 
     return  resultList
 
-if __name__ == "__main__":
-    lat, lon = 24.9870522,121.575362
-    a,b = getLocation(lat,lon,70)
-    print(a)
+# if(lat = 25.012595)
+#   100m => 0.000992 lon 
+# if (lat = 22)
+#   100m => 0.000968 lon 
+
+# 100m => 0.0009 lat
+
+lonPerMeterAt25 = 0.00000992
+lonPerMeterAt22 = 0.00000968
+latPerMeter = 0.000009
+
+
+def honeycombSearch(topLeftLat, topLeftLon, downRightLat, downRightLon, radius = 100):
+
+    print("Honeycomb Searching")
+
+    resultList = []
+
+    shift = 0
+
+    i = topLeftLat
+    while i > downRightLat: 
+        print("first")
+        j = topLeftLon - sqrt(3) * radius * 0.5 *(shift%2) * lonPerMeterAt25
+
+        while j < downRightLon:
+            print(i,j)
+            resultList.extend(getLocation(i, j, radius))
+
+            j += sqrt(3) * radius * lonPerMeterAt25
+        shift = (shift+1) % 2
+        
+        i -= 1.5 * radius * latPerMeter
+
+    return resultList
+
+

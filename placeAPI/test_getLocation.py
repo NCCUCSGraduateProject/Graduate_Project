@@ -13,10 +13,14 @@ radius = 150
 #   radius: int, default = "200"
 #
 # returns  a list of informations about each restautant in Json format
-resultList = placesQuery.getLocation(25.01491,121.53422,radius)
+
+# test 1
+# resultList = placesQuery.getLocation(25.01491,121.53422,radius)
 
 # save the results into files
-        
+
+resultList = placesQuery.honeycombSearch(25.008624, 121.506383, 25.007059, 121.512402,100)
+
 with open(os.path.join('results',str(radius)+'.json'), 'w') as f:
     f.write(json.dumps(resultList))
 

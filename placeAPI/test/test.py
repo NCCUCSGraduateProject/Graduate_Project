@@ -1,1 +1,2 @@
-print(1/111)
+from math import sqrt
+print(0.00000992 * sqrt(3))
