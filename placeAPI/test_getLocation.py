@@ -4,7 +4,7 @@ import placesQuery
 import os
 import json
 
-radius = 250
+radius = 150
 
 # function getlocation: 
 # parameters: 
@@ -13,7 +13,7 @@ radius = 250
 #   radius: int, default = "200"
 #
 # returns  a list of informations about each restautant in Json format
-resultList = placesQuery.getLocation(24.9870522,121.575362,radius)
+resultList = placesQuery.getLocation(25.01491,121.53422,radius)
 
 # save the results into files
         
@@ -23,5 +23,9 @@ with open(os.path.join('results',str(radius)+'.json'), 'w') as f:
 
 # print the names and ratings of the places got from query
 
+counter = 0
+print(len(resultList))
 for i in resultList:
     print(i["name"])
+    counter += 1
+print(counter)
