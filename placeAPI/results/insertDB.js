@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-const jsonData= require('./250.json'); 
+const jsonData= require('./150.json'); 
 console.log(jsonData);
 // Connect to the db
 MongoClient.connect("mongodb://localhost:27017",function(err, client){
