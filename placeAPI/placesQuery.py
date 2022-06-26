@@ -6,11 +6,11 @@ import constant
 from math import sqrt
 
 # parameters: 
-#   radius: int, default = "200"
+#   radius: int, default = 100
 #   lat: int, no default
 #   lon: int, no default
 #
-# returns a list of informations about each restautant in Json format
+# returns a list of informations about each restautant in Json format (dict)
 
 def getLocation(lat, lon, radius = 200):
     
@@ -68,31 +68,45 @@ def getLocation(lat, lon, radius = 200):
 
 # 100m => 0.0009 lat
 
+# lat/lon gap for every 1 meter
+
 lonPerMeterAt25 = 0.00000992
 lonPerMeterAt22 = 0.00000968
 latPerMeter = 0.000009
 
+# parameters: 
+#   radius: int, default = 100
+#   topLeftLat : the lat of top Left  
+#   topLeftLon : the lon of top Left 
+#   downRightLat : the lat of down right
+#   downRightLon : the lon of down right
+#
+# returns a list of informations about each restautant in JSON format (dict)
 
 def honeycombSearch(topLeftLat, topLeftLon, downRightLat, downRightLon, radius = 100):
 
-    print("Honeycomb Searching")
+    resultList = [] 
 
-    resultList = []
-
-    shift = 0
+    # Even rows should be shifted left while odd rows does not need to
+    shift = 0 
 
     i = topLeftLat
     while i > downRightLat: 
-        print("first")
+        
+        # j starts from the top left corner [left shift (√3/2)*r at even rows]
         j = topLeftLon - sqrt(3) * radius * 0.5 *(shift%2) * lonPerMeterAt25
 
         while j < downRightLon:
+
             print(i,j)
             resultList.extend(getLocation(i, j, radius))
 
-            j += sqrt(3) * radius * lonPerMeterAt25
+            # j += √3 * r  and convert to lon
+            j += sqrt(3) * radius * lonPerMeterAt25 
+
         shift = (shift+1) % 2
         
+        # i -= (3/2) * r and convert to lat
         i -= 1.5 * radius * latPerMeter
 
     return resultList
