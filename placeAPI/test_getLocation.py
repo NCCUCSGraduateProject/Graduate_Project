@@ -19,7 +19,7 @@ radius = 150
 
 # save the results into files
 
-resultList = placesQuery.honeycombSearch(25.008624, 121.506383, 25.007059, 121.512402,100)
+resultList = placesQuery.honeycombSearch(25.068704, 121.509770,25.026142, 121.569747,150)
 
 with open(os.path.join('results',str(radius)+'.json'), 'w') as f:
     f.write(json.dumps(resultList))
