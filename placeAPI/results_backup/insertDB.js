@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-const jsonData= require('./TaipeiCity068704_550018_040142_568227.json'); 
+const jsonData= require('./merged_file'); 
 console.log(jsonData);
 // Connect to the db
 MongoClient.connect("mongodb://localhost:27017",function(err, client){
@@ -10,7 +10,7 @@ MongoClient.connect("mongodb://localhost:27017",function(err, client){
  
     objs = jsonData;
 
-    db.collection('Taipei').insertMany(objs, (err)=>{
+    db.collection('AllTaipei').insertMany(objs, (err)=>{
         if(err) 
             console.log(err)
         else

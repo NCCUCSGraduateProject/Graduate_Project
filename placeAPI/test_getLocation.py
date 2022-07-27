@@ -19,9 +19,13 @@ radius = 150
 
 # save the results into files
 
-resultList = placesQuery.honeycombSearch(25.068704, 121.509770,25.026142, 121.569747,150)
+a, b, c, d = 25.09, 121.54,  25.068704,121.615917 
 
-with open(os.path.join('results',str(radius)+'.json'), 'w') as f:
+resultList = placesQuery.honeycombSearch(a,b,c,d,120);
+
+location = str(a) + '_' + str(b) + '_' + str(c) + '_' + str(d) 
+
+with open(os.path.join('results', location +'.json'), 'w') as f:
     f.write(json.dumps(resultList))
 
 
