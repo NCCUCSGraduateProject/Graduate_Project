@@ -9,14 +9,19 @@ from math import sqrt
 #   radius: int, default = 100
 #   lat: int, no default
 #   lon: int, no default
+#   type: string, default = restaurant, '' = all type
 #
 # returns a list of informations about each restautant in Json format (dict)
 
-def getLocation(lat, lon, radius = 200):
+def getLocation(lat, lon, radius = 200, type = 'restaurant'):
     
     location = str(lat) + ',' + str(lon) 
 
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius="+str(radius)+"&type=restaurant&language=zh-TW&key="+constant.API_KEY
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius="+str(radius)+"&type=" + type + "&language=zh-TW&key="+constant.API_KEY
+
+    # get all type
+    if type == "":
+        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius="+str(radius)+ "&language=zh-TW&key="+constant.API_KEY
 
     payload={}
     headers = {}
