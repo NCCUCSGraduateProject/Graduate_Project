@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Graguate_Project"
+  },
+  "author": "Mark",
+  "license": "ISC",
+  "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.16",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongodb": "^4.8.1"
+  }
+}

@@ -160,3 +160,7 @@ cython_debug/
 #.idea/
 constant.py
 api_key.py
+api_key.json
+.DS_Store
+
+node_modules
