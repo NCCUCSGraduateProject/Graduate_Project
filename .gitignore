@@ -3,4 +3,7 @@ constant.py
 __pycache__
 
 *.txt
-*.json
+results
+results_backup
+
+node_modules
