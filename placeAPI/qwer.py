@@ -19,9 +19,9 @@ radius = 150
 
 # save the results into files
 
-a, b, c, d = 24.98, 121.44, 24.94, 121.562202 
+a, b, c, d = 24.98, 121.562202, 24.94, 121.65
 
-resultList = placesQuery.honeycombSearch(a,b,c,d,120, 'restaurant')
+resultList = placesQuery.honeycombSearch(a,b,c,d,200, 'restaurant')
 # resultList = placesQuery.honeycombSearch(a,b,c,d,500, 'amusement_park')
 # resultList.extend(placesQuery.honeycombSearch(a,b,c,d,500, 'tourist_attraction'))
 
