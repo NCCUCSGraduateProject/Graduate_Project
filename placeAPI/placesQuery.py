@@ -13,7 +13,7 @@ from math import sqrt
 #
 # returns a list of informations about each restautant in Json format (dict)
 
-def getLocation(lat, lon, radius = 200, type = 'restaurant'):
+def getLocation(lat, lon, radius = 200, type = ''):
     
     location = str(lat) + ',' + str(lon) 
 
@@ -76,6 +76,7 @@ def getLocation(lat, lon, radius = 200, type = 'restaurant'):
 # lat/lon gap for every 1 meter
 
 lonPerMeterAt25 = 0.00000992
+lonPerMeterAt23 = 0.0000098
 lonPerMeterAt22 = 0.00000968
 latPerMeter = 0.000009
 
@@ -88,7 +89,7 @@ latPerMeter = 0.000009
 #
 # returns a list of informations about each restautant in JSON format (dict)
 
-def honeycombSearch(topLeftLat, topLeftLon, downRightLat, downRightLon, radius = 100):
+def honeycombSearch(topLeftLat, topLeftLon, downRightLat, downRightLon, radius = 100, type = ''):
 
     resultList = [] 
 
@@ -99,12 +100,12 @@ def honeycombSearch(topLeftLat, topLeftLon, downRightLat, downRightLon, radius =
     while i > downRightLat: 
         
         # j starts from the top left corner [left shift (√3/2)*r at even rows]
-        j = topLeftLon - sqrt(3) * radius * 0.5 *(shift%2) * lonPerMeterAt25
+        j = topLeftLon - sqrt(3) * radius * 0.5 *(shift%2) * lonPerMeterAt23
 
         while j < downRightLon:
 
             print(i,j)
-            resultList.extend(getLocation(i, j, radius))
+            resultList.extend(getLocation(i, j, radius,type))
 
             # j += √3 * r  and convert to lon
             j += sqrt(3) * radius * lonPerMeterAt25 
