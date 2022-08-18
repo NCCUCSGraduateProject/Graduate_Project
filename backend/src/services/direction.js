@@ -72,7 +72,10 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       }
     }
 
-    let result = Array.from(resultMap.values())
+    let result = {
+      nearby: Array.from(resultMap.values()),
+      path: pathArr
+    }
     return result
   }
   catch(error){
