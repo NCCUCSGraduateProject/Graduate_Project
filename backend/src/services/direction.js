@@ -3,14 +3,15 @@ const client = new Client({})
 const key = require("../configs/api_key.json").API_KEY
 
 var {MongoClient, MongoError} = require("mongodb");
-const url = "mongodb://localhost:27017/?replicaSet=rs0";
 const {distance, decodePath} = require("../utils/util.js")
 
+const url = 'mongodb://mark:gpteam@yj-serverhome.ddns.net:27017/map';
 
-
-const nearbyPoints = async (originLng, originLat, destLng, destLat, limitDistance) => {
+const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance) => {
   const mongoClient = await MongoClient.connect(url)
   
+  console.log(originLat, originLng, destLat, destLng, limitDistance)
+
   try{
     var originLatLng = {latitude: originLat, longitude: originLng}
     var destLatLng = {latitude: destLat, longitude: destLng}
@@ -22,7 +23,7 @@ const nearbyPoints = async (originLng, originLat, destLng, destLat, limitDistanc
     };
 
     let response = await client.directions({params:params})
-    //console.log(response.data)
+    // console.log(response.data)
     let steps = response.data.routes[0].legs[0].steps
     let pathArr = []
     for(var i = 0; i < steps.length; ++i){
@@ -51,8 +52,8 @@ const nearbyPoints = async (originLng, originLat, destLng, destLat, limitDistanc
     //   }
     // }
 
-    const database = mongoClient.db("graduate2");
-    const gatewayInfos = database.collection("map");
+    const database = mongoClient.db("map");
+    const gatewayInfos = database.collection("all");
     const query = {}
     const options = {
       projection: { _id:1, "geometry.location": 1, place_id:1},
@@ -61,7 +62,7 @@ const nearbyPoints = async (originLng, originLat, destLng, destLat, limitDistanc
 
     let resultMap = new Map()
     
-    for(var i = pathArr.length-1; i >=0; i-=50 ){
+    for(var i = pathArr.length-1; i >=0; i-=10 ){
       console.log(pathArr[i])
       for(var j = 0; j < documents.length; j++){
         let dis = distance(pathArr[i].lat, pathArr[i].lng, documents[j].geometry.location.lat, documents[j].geometry.location.lng, 'K')  

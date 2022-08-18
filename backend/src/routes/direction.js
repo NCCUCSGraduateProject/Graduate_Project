@@ -3,7 +3,7 @@ const router = express.Router();
 const direction = require('../services/direction.js')
 
 router.get('/nearbyPoints', async (req, res) => {
-  let result  = await direction.nearbyPoints(req.query.originLon, req.query.originLat, req.query.destLon, req.query.destLat, req.query.limitDistance)
+  let result  = await direction.nearbyPoints(req.query.originLat, req.query.originLng, req.query.destLat, req.query.destLng, req.query.limitDistance)
  // res.json({"hello":"hello"})
   res.json(result)
   
