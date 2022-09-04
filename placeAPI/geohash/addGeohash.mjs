@@ -20,7 +20,7 @@ MongoClient.connect("mongodb://localhost:27017",function(err, client){
             var geohash = Geohash.encode(element.geometry.location.lat, element.geometry.location.lng, 11); 
             element.geometry.geohash = geohash;
         });
-        console.log(result[3]);
+        console.log(result[3]); // print a random document from the collection
         allData = result;
 
         var url = 'mongodb://mark:gpteam@yj-serverhome.ddns.net:27017'
