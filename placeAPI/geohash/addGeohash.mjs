@@ -23,8 +23,10 @@ MongoClient.connect("mongodb://localhost:27017",function(err, client){
         console.log(result[3]);
         allData = result;
 
-        MongoClient.connect("mongodb://mark:gpteam@yj-serverhome.ddns.net:27017/map",function(err, client){
- 
+        var url = 'mongodb://mark:gpteam@yj-serverhome.ddns.net:27017'
+        var rtl2 = "mongodb://mark:gpteam@yj-serverhome.ddns.net:27017/map"
+        MongoClient.connect(url,function(err, client){
+
             if(err) 
                 throw err;
             else 
