@@ -5,7 +5,7 @@ const key = require("../configs/api_key.json").API_KEY
 var {MongoClient, MongoError} = require("mongodb");
 const {distance, decodePath} = require("../utils/util.js")
 
-const url = 'mongodb://mark:gpteam@yj-serverhome.ddns.net:27017/map';
+const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
 
 const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance) => {
   const mongoClient = await MongoClient.connect(url)
@@ -54,22 +54,22 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
 
     const database = mongoClient.db("map");
     const gatewayInfos = database.collection("all");
-    const query = {}
+    
     const options = {
       projection: { _id:1, "geometry.location": 1, place_id:1},
     }
-    const documents = await gatewayInfos.find(query, options).toArray();
-
+    
     let resultMap = new Map()
     
     for(var i = pathArr.length-1; i >=0; i-=10 ){
       console.log(pathArr[i])
+      const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat], ((1000*limitDistance)/3963.2)/1609 ] } } }
+      const documents = await gatewayInfos.find(query, options).toArray();
+      
       for(var j = 0; j < documents.length; j++){
-        let dis = distance(pathArr[i].lat, pathArr[i].lng, documents[j].geometry.location.lat, documents[j].geometry.location.lng, 'K')  
-        if( dis < limitDistance){
-          resultMap.set(documents[j].place_id, documents[j])
-        }
+        resultMap.set(documents[j].place_id, documents[j])
       }
+      
     }
 
     let result = {
