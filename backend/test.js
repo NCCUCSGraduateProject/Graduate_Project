@@ -9,5 +9,5 @@ axios.get("http://localhost:8080/direction/nearbyPoints", {
         limitDistance: 1000
     }
 }).then(function(response){
-    console.log(response.data[0])
+    console.log(response.data)
 })
