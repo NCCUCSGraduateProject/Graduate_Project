@@ -52,26 +52,28 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     //   }
     // }
 
-    const database = mongoClient.db("map");
-    const gatewayInfos = database.collection("all");
+    const database = mongoClient.db("gp");
+    const gatewayInfos = database.collection("map");
     
     const options = {
-      projection: { _id:1, "geometry.location": 1, place_id:1},
+      projection: { _id:1, "geometry": 1, rating:1, user_ratings_total:1,place_id:1},
     }
     
     let resultMap = new Map()
     
     for(var i = pathArr.length-1; i >=0; i-=10 ){
       console.log(pathArr[i])
-      const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat], ((1000*limitDistance)/3963.2)/1609 ] } } }
+      //((1000*limitDistance)/3963.2)/1609
+      //const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat],  1] } } }
+      const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat],  ((1000*limitDistance)/3963.2)/1609] } } }
       const documents = await gatewayInfos.find(query, options).toArray();
-      
+      console.log(documents)
       for(var j = 0; j < documents.length; j++){
         resultMap.set(documents[j].place_id, documents[j])
       }
       
     }
-
+    console.log(resultMap)
     let result = {
       nearby: Array.from(resultMap.values()),
       path: pathArr
