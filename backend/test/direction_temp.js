@@ -34,14 +34,10 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     // console.log(response.data)
     let steps = response.data.routes[0].legs[0].steps
     let pathArr = []
-    let pathObjectArr = []
     for(var i = 0; i < steps.length; ++i){
-      const {path, pathObject} = decodePath(steps[i].polyline.points)
-      pathArr.push(path)
-      pathObjectArr.push(pathObject)
+      pathArr.push(decodePath(steps[i].polyline.points))
     }
     pathArr = pathArr.flat()
-    pathObjectArr = pathObjectArr.flat()
     
 
     // ========= jsts ===========
@@ -56,7 +52,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     var geoReader = new GeoJSONReader()
     var geoWriter = new GeoJSONWriter();
     var geometry = geoReader.read(geoInput)
-    var buffer = BufferOp.bufferOp(geometry, limitDistance * 0.0024);
+    var buffer = BufferOp.bufferOp(geometry, 50);
     var polygon = geoWriter.write(buffer);
     // console.log("Input line:")
     // for (var i in geoInput.coordinates) {
@@ -65,7 +61,6 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     // console.log("Result:")
     
     console.log(polygon.coordinates)
-    
     
     // =========   mongo query =======
 
@@ -77,7 +72,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     }
 
     const query = {
-      geometry: {
+      loc: {
         $geoWithin: {
            $geometry: {
               type : "Polygon" ,
@@ -106,7 +101,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     // console.log(resultMap)
     let result = {
       nearby: documents,
-      path: pathObjectArr
+      path: pathArr
     }
     return result
   }

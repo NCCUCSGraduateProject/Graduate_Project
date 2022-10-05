@@ -27,7 +27,6 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 function decodePath(encodedPath) {
   let len = encodedPath.length || 0;
   let path = new Array(Math.floor(encodedPath.length / 2));
-  let pathObject = new Array(Math.floor(encodedPath.length / 2));
   let index = 0;
   let lat = 0;
   let lng = 0;
@@ -51,14 +50,9 @@ function decodePath(encodedPath) {
       } while (b >= 0x1f);
       lng += result & 1 ? ~(result >> 1) : result >> 1;
       path[pointIndex] = [ lng * 1e-5, lat * 1e-5  ];
-      pathObject[pointIndex] = { lat: lat * 1e-5, lng: lng * 1e-5 }
   }
   path.length = pointIndex;
-  pathObject.length = pointIndex;
-  return {
-    path: path,
-    pathObject: pathObject
-  };
+  return path;
 }
 
 module.exports ={
