@@ -13,7 +13,7 @@ const {distance, decodePath} = require("../utils/util.js")
 
 const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
 
-const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance) => {
+const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange) => {
   const mongoClient = await MongoClient.connect(url)
   
   console.log(originLat, originLng, destLat, destLng, limitDistance)
@@ -35,60 +35,78 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     let steps = response.data.routes[0].legs[0].steps
     let pathArr = []
     let pathObjectArr = []
+    let tempPathArr = []
+    let tempPathObjectArr = []
+    let tempDistance = 0
     for(var i = 0; i < steps.length; ++i){
       const {path, pathObject} = decodePath(steps[i].polyline.points)
-      pathArr.push(path)
-      pathObjectArr.push(pathObject)
+      
+      tempDistance += steps[i].distance.value
+      tempPathArr.push(path)
+      tempPathObjectArr.push(pathObject)
+      
+      if(tempDistance >= splitRange || i == steps.length - 1){
+        pathArr.push(tempPathArr.flat())
+        pathObjectArr.push(tempPathObjectArr.flat())
+        tempDistance = 0
+        tempPathArr = []
+        tempPathObjectArr = []
+      }
+      
     }
-    pathArr = pathArr.flat()
-    pathObjectArr = pathObjectArr.flat()
+    // pathArr = pathArr.flat()
+    // pathObjectArr = pathObjectArr.flat()
     
 
     // ========= jsts ===========
     const {default: GeoJSONReader}  = await import('jsts/org/locationtech/jts/io/GeoJSONReader.js')
     const {default: GeoJSONWriter}  = await import('jsts/org/locationtech/jts/io/GeoJSONWriter.js')
     const { BufferOp } = await import('jsts/org/locationtech/jts/operation/buffer.js')
-    var geoInput = {
-      type: "LineString",
-      coordinates: pathArr,
-    };
     
-    var geoReader = new GeoJSONReader()
-    var geoWriter = new GeoJSONWriter();
-    var geometry = geoReader.read(geoInput)
-    var buffer = BufferOp.bufferOp(geometry, limitDistance * 0.0024);
-    var polygon = geoWriter.write(buffer);
-    // console.log("Input line:")
-    // for (var i in geoInput.coordinates) {
-    //     console.log(geoInput.coordinates[i]);
-    // }
-    // console.log("Result:")
-    
-    console.log(polygon.coordinates)
-    
-    
-    // =========   mongo query =======
+    let nearbyArr = []
+    for(var i = 0; i < pathArr.length; ++i) {
+      var geoInput = {
+        type: "LineString",
+        coordinates: pathArr[i],
+      };
+      
+      var geoReader = new GeoJSONReader()
+      var geoWriter = new GeoJSONWriter();
+      var geometry = geoReader.read(geoInput)
+      var buffer = BufferOp.bufferOp(geometry, limitDistance * 0.0024);
+      var polygon = geoWriter.write(buffer);
+      // console.log("Input line:")
+      // for (var i in geoInput.coordinates) {
+      //     console.log(geoInput.coordinates[i]);
+      // }
+      // console.log("Result:")
+      
+      console.log(polygon.coordinates)
+      
+      
+      // =========   mongo query =======
 
-    const database = mongoClient.db("gp");
-    const gatewayInfos = database.collection("map");
-    
-    const options = {
+      const database = mongoClient.db("gp");
+      const gatewayInfos = database.collection("map");
+      
+      const options = {
       projection: { _id:1, "geometry": 1, rating:1, user_ratings_total:1,place_id:1},
-    }
+      }
 
-    const query = {
+      const query = {
       geometry: {
-        $geoWithin: {
-           $geometry: {
+          $geoWithin: {
+          $geometry: {
               type : "Polygon" ,
               coordinates: polygon.coordinates
-           }
-        }
+          }
+          }
       }
-    }
-    const documents = await gatewayInfos.find(query, options).toArray();
+      }
+      const documents = await gatewayInfos.find(query, options).toArray();
+      nearbyArr.push(documents);
 
-    
+    }
     
     
     // for(var i = pathArr.length-1; i >=0; i-=10 ){
@@ -105,7 +123,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     // }
     // console.log(resultMap)
     let result = {
-      nearby: documents,
+      nearby: nearbyArr,
       path: pathObjectArr
     }
     return result
