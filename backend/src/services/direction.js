@@ -73,7 +73,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     const gatewayInfos = database.collection("map");
     
     const options = {
-      projection: { _id:1, "geometry": 1, rating:1, user_ratings_total:1,place_id:1},
+      projection: { _id:1, "geometry": 1, rating:1, name:1, icon:1, user_ratings_total:1,place_id:1},
     }
 
     const query = {
