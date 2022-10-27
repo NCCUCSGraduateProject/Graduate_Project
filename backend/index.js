@@ -9,8 +9,10 @@ app.use(cors({
 }))
 
 const direction = require('./src/routes/direction.js')
+const autoComplete = require('./src/routes/autoComplete.js')
 
 app.use('/direction', direction)
+app.use('/autoComplete', autoComplete)
 
 
 app.listen(8080, function() {
