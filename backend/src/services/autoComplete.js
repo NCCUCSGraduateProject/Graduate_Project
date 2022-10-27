@@ -2,8 +2,6 @@ const API_KEY = require("../configs/api_key.json").API_KEY
 const axios = require('axios')
 
 const predict = async (inputStr) => {
-  // user input string in search bar
-  console.log(inputStr.query)
 
   var config = {
     method: 'get',
@@ -12,7 +10,7 @@ const predict = async (inputStr) => {
   };
   
   let response = await axios(config)
-  
+
   var result = []
   response.data.predictions.forEach((item) => {
       let data = {
@@ -24,7 +22,6 @@ const predict = async (inputStr) => {
   })
 
   // the final data we want in the predictions
-  console.log('Result: ', result);
   return result
 
 
