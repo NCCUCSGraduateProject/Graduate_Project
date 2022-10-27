@@ -125,8 +125,8 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     // }
     // console.log(resultMap)
     let result = {
-      nearby: nearbyArr,
-      path: pathObjectArr
+      nearbys: nearbyArr,
+      paths: pathObjectArr
     }
     return result
   }
