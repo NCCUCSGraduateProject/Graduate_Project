@@ -13,7 +13,7 @@ const {distance, decodePath} = require("../utils/util.js")
 
 const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
 
-const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange) => {
+const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange, directionMode) => {
   const mongoClient = await MongoClient.connect(url)
   
   console.log(originLat, originLng, destLat, destLng, limitDistance)
@@ -26,7 +26,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     const params = {
       origin: originLatLng,
       destination: destLatLng,
-      travelMode: 'DRIVING',
+      travelMode: directionMode.toUpperCase(),
       key: key
     };
 
