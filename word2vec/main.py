@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import jieba
 import spacy
 
@@ -54,18 +53,48 @@ mycol = mydb["map"]
 
 print('connect mongo\n')
 
+keywords = ["餐廳"]
+restaurantType = ["日式","美式","中式","中式餐廳"]
+food = ["漢堡","蔥油餅","珍珠奶茶","飲料","食物"]
+foodArr = ["義大利麵","雞排","豬排","烤肉","蕎麥麵","生魚片","丼飯","壽司","麵包","蛋糕","蛋包飯","炒麵","炒飯","餃子","餅乾","麵線","麵","漢堡","薯條","炸雞","炸魚","炸蝦","牛排","燒烤","火鍋","壽喜燒","燒臘","燒肉","湯圓","鍋貼","燒餅","飯糰","炒米粉","炒米糕","糯米飯","燒賣","燒鴨","燒鵝","豬腳","豬肉","豬腳","鹹酥雞","鍋燒意麵","蔥油餅","甜點","起司","巧克力","焗烤","沙拉"]
+
 i = 1
+count = 0
+wordsdel = []
+wordskept = []
+
 for x in mycol.find():
     #print(len(x['reviews']))
     words = filtStopWords(x['reviews'])
-    #print(words)
+    # print("words: ",words)
     print(i, end='\r')
     i += 1
-    vectors = word2vec(words)
 
-    query = {"place_id": x['place_id']}
-    newvalues = {"$set": {"reviews_spacy": vectors}}
-    mycol.update_one(query, newvalues)
+    # test each word in words' similarity 
     
-    #print(vectors[0])
+
+    for word in words:
+        
+        similar = False
+        print(word, round(nlp(word).similarity(nlp("食物")),3), round(nlp(word).similarity(nlp("餐廳")),3))
+            
+        if nlp(word).similarity(nlp("食物")) >= 0.149 and nlp(word).similarity(nlp("餐廳")) > 0.1: 
+        # if nlp(word).similarity(nlp(food[4])) >= 0.2 or nlp(word).similarity(nlp(keywords[0])) > 0.4: 
+            similar = True
+            print("jaja")
+        
+        if similar:
+            wordskept.append(word)
+            count += 1
+        else:
+            wordsdel.append(word)
+
+    
+
+    # vectors = word2vec(words)
+    if i > 1:
+        print("phrase count:", count)
+        break;
 myclient.close()
+print(wordskept)
+print(wordsdel)
