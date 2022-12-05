@@ -10,6 +10,8 @@ for f in glob.glob("*.json"):
         # print(data)
 
 print(len(data))
+print(data[200])
 
-with open("merged_file.json",'w') as outfile:
+with open("most_recently_merged_file.json",'w') as outfile:
   json.dump(data, outfile)
+

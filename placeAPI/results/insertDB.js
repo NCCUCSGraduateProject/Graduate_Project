@@ -1,8 +1,12 @@
 var MongoClient = require('mongodb').MongoClient;
-const jsonData= require('./merged_file2.json'); 
-console.log(jsonData);
+const jsonData= require('./most_recently_merged_file.json'); 
+console.log(jsonData.length);
+console.log(jsonData[0])
 // Connect to the db
-MongoClient.connect("mongodb://localhost:27017",function(err, client){
+localUrl = 'mongodb://localhost:27017';
+remoteUrl = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
+
+MongoClient.connect(localUrl,function(err, client){
  
     if(err) throw err;
  
@@ -10,12 +14,12 @@ MongoClient.connect("mongodb://localhost:27017",function(err, client){
  
     objs = jsonData;
 
-    db.collection('AllTaipei').insertMany(objs, (err)=>{
+    db.collection('TaipeiLeft').insertMany(objs, (err)=>{
         if(err) 
             console.log(err)
         else
             console.log('insertion succeses')
         client.close()
-    })
+    }) 
 
 });

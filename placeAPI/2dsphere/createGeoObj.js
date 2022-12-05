@@ -12,11 +12,11 @@ MongoClient.connect(localUrl,function(err, client){
 
     const db = client.db('placeAPI');
 
-    db.collection('AllTaipei').find({}).toArray(function(err, result) {
+    db.collection('TaipeiLeft').find({}).toArray(function(err, result) {
 
         if (err) 
             throw err;
-
+        console.log('type', result)
         result.forEach(element => {
             geometry = {
                 type: 'Point',
@@ -28,7 +28,7 @@ MongoClient.connect(localUrl,function(err, client){
         // console.log(result[3]); // print a random document
 
 
-        db.collection('sphere2dAll').insertMany(result,{ordered : false }, (err)=>{
+        db.collection('sphere2dAll').insertMany(result, (err)=>{
             if(err) 
                 console.log(err)
             else

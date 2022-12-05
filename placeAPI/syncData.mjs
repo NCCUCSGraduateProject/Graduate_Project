@@ -1,36 +1,37 @@
 import mongo from 'mongodb';
 var MongoClient = mongo.MongoClient;
 
-// Connect to the db
-MongoClient.connect("mongodb://localhost:27017",function(err, client){
- 
-    if(err) throw err;
- 
-    const db = client.db('placeAPI');
+var url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority'
+var localUrl = "mongodb://localhost:27017";
 
-    db.collection('sphere2dAll').find({}).toArray(function(err, result) {
+// Connect to the db
+console.log('start')
+MongoClient.connect(url,function(err, client){
+
+    if(err) throw err;
+    console.log('remote connected')
+ 
+    const db = client.db('gp');
+
+    db.collection('map').find({}).toArray(function(err, result) {
         if (err) throw err;
         
-  
-        var url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority'
-        
-        MongoClient.connect(url,function(err, client){
+        MongoClient.connect(localUrl,function(err, client){
 
             if(err) 
                 throw err;
             else 
-                console.log("Connected")
+                console.log("local Connected")
 
-            const db = client.db('gp');
+            const db = client.db('placeAPI');
 
-            db.collection('map').insertMany(result, (err)=>{
+            db.collection('backupAll').insertMany(result, (err)=>{
                 if(err) 
                     console.log(err)
                 else
                     console.log('insertion succeses')
             })
 
-            client.close();
   
         });
 

@@ -4,7 +4,7 @@ import placesQuery
 import os
 import json
 
-radius = 3000
+radius = 1500
 
 # function getlocation: 
 # parameters: 
@@ -15,24 +15,24 @@ radius = 3000
 # returns  a list of informations about each restautant in Json format
 
 # test 1
-x, y = 23.208144, 119.430012
+x, y = 25.187223, 121.421247
 
 # resultList = placesQuery.getLocation(x, y,radius,'amusement_park')
-# print(len(resultList))
+# print('amusement_park',len(resultList))
 
+# resultList = []
 # resultList.extend(placesQuery.getLocation(x,y,radius,'tourist_attraction'))
-# print(len(resultList))
+# print('tourist attraction',len(resultList))
 
 resultList = placesQuery.getLocation(x, y,radius,'restaurant')
 
 
 # print(json.dumps(resultList),'\n\n\n')
 
-
+# resultList.extend(placesQuery.getLocation(x,y,radius,'park'))
 
 for i in resultList:
     print(i['name'])
-    print(i['types'])
 
-with open(os.path.join('results/penghu', 'qimeiFood.json'), 'w') as f:
+with open(os.path.join('results', 'single.json'), 'w') as f:
     f.write(json.dumps(resultList))

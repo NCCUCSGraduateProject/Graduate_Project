@@ -3,6 +3,7 @@ import requests
 import json
 import time
 import constant
+import os
 from math import sqrt
 
 # parameters: 
@@ -96,19 +97,29 @@ def honeycombSearch(topLeftLat, topLeftLon, downRightLat, downRightLon, radius =
     # Even rows should be shifted left while odd rows does not need to
     shift = 0 
 
+    counter = 0
+
     i = topLeftLat
     while i > downRightLat: 
         
         # j starts from the top left corner [left shift (√3/2)*r at even rows]
-        j = topLeftLon - sqrt(3) * radius * 0.5 *(shift%2) * lonPerMeterAt23
+        j = topLeftLon - sqrt(3) * radius * 0.5 *(shift%2) * lonPerMeterAt25
 
         while j < downRightLon:
 
             print(i,j)
             resultList.extend(getLocation(i, j, radius,type))
 
+            if counter % 1000 == 0: 
+
+                with open(os.path.join('results', 'TpRestaurant' + str(counter) + '.json'), 'w') as f:
+                    f.write(json.dumps(resultList))
+                print(counter)
+
+            counter += 1
+
             # j += √3 * r  and convert to lon
-            j += sqrt(3) * radius * lonPerMeterAt25 
+            j += sqrt(3) * radius * lonPerMeterAt25
 
         shift = (shift+1) % 2
         

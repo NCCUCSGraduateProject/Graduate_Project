@@ -2,11 +2,11 @@ const axios = require('axios');
 const API_KEY = require('./constant.js'); 
 
 // user input string in search bar
-inputStr = '政大';
+inputStr = '龍角';
 
 var config = {
   method: 'get',
-  url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + inputStr + '&types=restaurant|amusement_park|tourist_attraction&key=' + API_KEY,
+  url: encodeURI('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + inputStr + '&location=24.991728%2C121.573948&radius=500&types=restaurant|amusement_park|tourist_attraction&key=' + API_KEY),
   headers: { }
 };
 

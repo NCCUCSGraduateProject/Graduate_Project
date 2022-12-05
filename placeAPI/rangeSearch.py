@@ -4,7 +4,7 @@ import placesQuery
 import os
 import json
 
-radius = 150
+# radius = 150
 
 # function getlocation: 
 # parameters: 
@@ -19,15 +19,22 @@ radius = 150
 
 # save the results into files
 
-a, b, c, d = 24.98, 121.44, 24.94, 121.562202 
+a, b, c, d = 25.163, 121.346, 24.9, 121.44
 
-resultList = placesQuery.honeycombSearch(a,b,c,d,120, 'restaurant')
-# resultList = placesQuery.honeycombSearch(a,b,c,d,500, 'amusement_park')
-# resultList.extend(placesQuery.honeycombSearch(a,b,c,d,500, 'tourist_attraction'))
+resultList = placesQuery.honeycombSearch(a,b,c,d,150, 'restaurant')
+# resultList = []
+# resultList.extend(placesQuery.honeycombSearch(a,b,c,d,1000, 'amusement_park'))
+# resultList.extend(placesQuery.honeycombSearch(a,b,c,d,1000, 'tourist_attraction'))
 
+'''
+x,y = 22.045750, 121.545702
+radius = 8000
+resultList.extend(placesQuery.getLocation(x, y,radius,'amusement_park'))
+resultList.extend(placesQuery.getLocation(x, y,radius,'tourist_attraction'))
+'''
 location = str(a) + '_' + str(b) + '_' + str(c) + '_' + str(d) 
 
-with open(os.path.join('results', location + 'restaurant.json'), 'w') as f:
+with open(os.path.join('results', 'TpRestaurant' + location + '.json'), 'w') as f:
     f.write(json.dumps(resultList))
 
 
