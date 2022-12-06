@@ -50,7 +50,10 @@ def word2vec2(words):
 
 
 import pymongo
-myclient = pymongo.MongoClient("mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority")
+
+remoteUrl = "mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority"
+localUrl = "mongodb://localhost:27017"
+myclient = pymongo.MongoClient(remoteUrl)
 mydb = myclient["gp"]
 mycol = mydb["map"]
 
@@ -104,8 +107,8 @@ for doc in mycol.find():
 
     # keep the first five words in sorted phrasekept to wordskept
     phraseskept.sort(key=lambda doc: doc['similarity'], reverse=True)
-    for phrase in phraseskept[:5]:
-        wordskept.append(phrase['phrase'])
+    # for phrase in phraseskept[:5]:
+        # wordskept.append(phrase['phrase'])
 
     print(doc['name'])
     for word in phraseskept:
@@ -113,10 +116,24 @@ for doc in mycol.find():
     print('\n')
     
 
-    # vectors = word2vec(words)
-    if i > 30:
-        print("phrase count:", count)
-        break;
+    vectors = word2vec(words)
+    query = {"place_id": doc['place_id']}
+    newvalues = {"$set": {"reviews_spacy": vectors}}
+    mycol.update_one(query, newvalues)
+
+    if i % 100 == 0:
+        print(i)
+        print(count)
+        print('wordsdel: ',wordsdel)
+        print('wordskept: ',wordskept)
+        print('-------------------------------------')
+
 myclient.close()
 print(wordskept)
-# print(wordsdel)
+print(wordsdel)
+print(count/len(wordsdel))
+
+
+
+
+    
