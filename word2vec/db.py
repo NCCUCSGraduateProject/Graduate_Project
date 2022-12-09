@@ -1,21 +1,35 @@
 import pymongo
 
 localUrl = 'mongodb://localhost:27017'
-oldRemoteUrl = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority'
-newRemoteUrl = 'mongodb://localhost:57017'
+remoteUrl = 'mongodb://localhost:57017'
 
-myclient = pymongo.MongoClient(newRemoteUrl)
-mydb = myclient["gp"]
-mycol = mydb["map"]
+remoteClient = pymongo.MongoClient(remoteUrl)
+remoteDb = remoteClient["gp"]
+remoteCol = remoteDb["map"]
+
+localClient = pymongo.MongoClient(localUrl)
+localDb = localClient["placeAPI"]
+localCol = localDb["backupAll"]
 
 print('connect mongo\n')
 
 count = 0
-i = 0
+i = 1
 
-for doc in mycol.find():
-    print(doc)
-    # if "tourist_attraction" in doc["types"] or "amusement_park" in doc["types"]:
-        # count += 1
+# clone collection from local to remote
+for doc in localCol.find({}):
+    
+    if i % 50 == 0:
+        print(i)
+    i += 1
+    if i <= 30981:
+        continue
+    if i >= 47300:
+        break
+    
+    # print(doc)
+    remoteCol.insert_one(doc)
 
-myclient.close()
+print('end')
+remoteClient.close()
+localClient.close()

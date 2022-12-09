@@ -14,6 +14,7 @@ stopwords.append('\n\n')
 stopwords.append('\n\n\n')
 stopwords.append('⋯')
 stopwords.append('😆')
+stopwords.append('📍')
 
 print('create stop words\n\n')
 nlp.Defaults.stop_words |= set(stopwords)
@@ -24,7 +25,6 @@ print('stop words created\n')
 def filtStopWords(documents):
     words = set()
     i = 0
-    #print('hi')
    
     doc = jieba.cut(documents.replace(' ', ''))
     for token in doc:  
@@ -59,12 +59,15 @@ print('connect mongo\n')
 foodArr = ["義大利麵","雞排","豬排","烤肉","蕎麥麵","生魚片","丼飯","壽司","麵包","蛋糕","蛋包飯","炒麵","炒飯","餃子","餅乾","麵線","麵","漢堡","薯條","炸雞","炸魚","炸蝦","牛排","燒烤","火鍋","壽喜燒","燒臘","燒肉","湯圓","鍋貼","燒餅","飯糰","炒米粉","炒米糕","糯米飯","燒賣","燒鴨","燒鵝","豬腳","豬肉","豬腳","鹹酥雞","鍋燒意麵","蔥油餅","甜點","起司","巧克力","焗烤","沙拉","酒"]
 
 i = 1
+totalWords = 0
 count = 0   
 wordsdel = []
 wordskept = []
 nlpScenery = nlp("景點")
 nlpLandscape = nlp("風景")
 nlpSea = nlp("海")
+nlpMuseum = nlp("博物館")
+
 
 nlpFoodArr = [ nlp(x) for x in foodArr]
 
@@ -74,7 +77,6 @@ for doc in mycol.find():
     if "tourist_attraction" in doc["types"] or "amusement_park" in doc["types"]:
         
         words = filtStopWords(doc['reviews'])
-        print(words)
         i += 1
 
         # test each word in words' similarity 
@@ -82,9 +84,15 @@ for doc in mycol.find():
         phraseskept = []
 
         for word in words:
+            totalWords += 1
             nlpWord = nlp(word)
-            print(word, round(nlpWord.similarity(nlpScenery),3), round(nlpWord.similarity(nlpLandscape),3), round(nlpWord.similarity(nlpSea),3))
-
+            print(word, round(nlpWord.similarity(nlpScenery),3), round(nlpWord.similarity(nlpLandscape),3), round(nlpWord.similarity(nlpSea),3), round(nlpWord.similarity(nlpMuseum),3))
+            if nlpWord.similarity(nlpScenery) >= 0.2 and nlpWord.similarity(nlpLandscape) > 0.25: 
+                phraseskept.append(word)
+                wordskept.append(word)
+                count += 1
+        if i > 10:
+            break
         words = []
         for word in words:
 
@@ -117,7 +125,8 @@ for doc in mycol.find():
 
 myclient.close()
 print(wordskept)
-print(wordsdel)
+print(count)
+print(totalWords)
 
 
 

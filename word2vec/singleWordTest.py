@@ -1,4 +1,13 @@
 import spacy
+import numpy as np
+
+def normalize(v):
+    norm=np.linalg.norm(v)
+    if norm==0:
+        norm=np.finfo(v.dtype).eps
+    return v/norm
+
+print((normalize(([1,2,3]))))
 
 print('load model\n')
 nlp = spacy.load("zh_core_web_lg")
@@ -9,9 +18,9 @@ foodArr = ["義大利麵","雞排","豬排","烤肉","蕎麥麵","生魚片","�
 garbageWords = ["疫情","稍微","下面"]
 
 word = "紅茶"
-print(word, round(nlp(word).similarity(nlp(testWord)),3), round(nlp(word).similarity(nlp("餐廳")),3))
+# print(word, round(nlp(word).similarity(nlp(testWord)),3), round(nlp(word).similarity(nlp("餐廳")),3))
 word = "拿鐵"
-print(word, round(nlp(word).similarity(nlp(testWord)),3), round(nlp(word).similarity(nlp("餐廳")),3))
+# print(word, round(nlp(word).similarity(nlp(testWord)),3), round(nlp(word).similarity(nlp("餐廳")),3))
             
 def foodDictTest(word, foodDict):
     totalSimilarity = 0
@@ -19,5 +28,14 @@ def foodDictTest(word, foodDict):
         totalSimilarity += nlp(word).similarity(nlp(food))
     return totalSimilarity/len(foodDict)
 
-print(foodDictTest("珍珠奶茶", foodArr))
-print(foodDictTest("拿鐵", foodArr))
+# print(foodDictTest("珍珠奶茶", foodArr))
+# print(foodDictTest("拿鐵", foodArr))
+word = '風景'
+# print(word, round(nlp(word).similarity(nlp('摩托車')),3))
+
+print(nlp("麵").similarity(nlp("炒麵")))
+a = normalize((nlp("麵").vector))
+# print(a)
+b = (normalize(nlp("炒麵").vector))
+# print(b)
+print(np.dot(a,b))
