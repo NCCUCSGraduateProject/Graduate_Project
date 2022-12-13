@@ -58,9 +58,15 @@ localCol = localDb["test4"]
 
 print('connect mongo\n')
 
-
+for doc in localCol.find():
+    if  'food' not in doc["types"] and 'restaurant' not in doc['types']:
+        print(doc['name'])
+        print(doc['types'])
+    
 i = 0
 for doc in localCol.find():
+
+    break # 
 
     words = filtStopWords(doc['reviews'])
 

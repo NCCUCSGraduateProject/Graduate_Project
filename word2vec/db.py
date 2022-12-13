@@ -14,22 +14,20 @@ localCol = localDb["backupAll"]
 print('connect mongo\n')
 
 count = 0
-i = 1
+i = 0
+
 
 # clone collection from local to remote
-for doc in localCol.find({}):
-    
-    if i % 50 == 0:
-        print(i)
+for doc in remoteCol.find({}):
+
+    count += len(doc['tags'])
     i += 1
-    if i <= 30981:
-        continue
-    if i >= 47300:
-        break
-    
-    # print(doc)
-    remoteCol.insert_one(doc)
+    print(i)
+
+    # remoteCol.insert_one(doc)
 
 print('end')
+print(count)
+
 remoteClient.close()
 localClient.close()

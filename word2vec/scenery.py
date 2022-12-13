@@ -15,6 +15,7 @@ stopwords.append('\n\n\n')
 stopwords.append('⋯')
 stopwords.append('😆')
 stopwords.append('📍')
+stopwords.append('🌟')
 
 print('create stop words\n\n')
 nlp.Defaults.stop_words |= set(stopwords)
@@ -48,15 +49,13 @@ def word2vec2(words):
 
 import pymongo
 
-remoteUrl = "mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority"
+remoteUrl = "mongodb://localhost:57017"
 localUrl = "mongodb://localhost:27017"
-myclient = pymongo.MongoClient(localUrl)
-mydb = myclient["placeAPI"]
-mycol = mydb["testTemp"]
+myclient = pymongo.MongoClient(remoteUrl)
+mydb = myclient["gp"]
+mycol = mydb["map"]
 
 print('connect mongo\n')
-
-foodArr = ["義大利麵","雞排","豬排","烤肉","蕎麥麵","生魚片","丼飯","壽司","麵包","蛋糕","蛋包飯","炒麵","炒飯","餃子","餅乾","麵線","麵","漢堡","薯條","炸雞","炸魚","炸蝦","牛排","燒烤","火鍋","壽喜燒","燒臘","燒肉","湯圓","鍋貼","燒餅","飯糰","炒米粉","炒米糕","糯米飯","燒賣","燒鴨","燒鵝","豬腳","豬肉","豬腳","鹹酥雞","鍋燒意麵","蔥油餅","甜點","起司","巧克力","焗烤","沙拉","酒"]
 
 i = 1
 totalWords = 0
@@ -64,20 +63,31 @@ count = 0
 wordsdel = []
 wordskept = []
 nlpScenery = nlp("景點")
-nlpLandscape = nlp("風景")
 nlpSea = nlp("海")
 nlpMuseum = nlp("博物館")
+nlpForest = nlp('森林')
+nlpTrails = nlp('步道')
+nlpPark = nlp('公園')
+
+nlpWords = [nlpSea, nlpMuseum, nlpForest, nlpTrails, nlpPark]
+
+cursor = mycol.find({}, no_cursor_timeout=True,batch_size=10)
+for doc in cursor:
+
+    i += 1
+    if i % 1000 == 0:
+        print('\n\n\n\n\n\n')
+        print('-------------------------------------')
+        print('\n\n\\n\n\n\n')
+        print(i)
+        print('\n\n\n\n\n\n')
+        print('-------------------------------------')
+        print('\n\n\\n\n\n\n')
 
 
-nlpFoodArr = [ nlp(x) for x in foodArr]
 
-
-for doc in mycol.find():
-    
-    if "tourist_attraction" in doc["types"] or "amusement_park" in doc["types"]:
-        
+    if 'food' not in doc["types"] or 'restaurant' not in doc['types']:
         words = filtStopWords(doc['reviews'])
-        i += 1
 
         # test each word in words' similarity 
 
@@ -86,48 +96,55 @@ for doc in mycol.find():
         for word in words:
             totalWords += 1
             nlpWord = nlp(word)
-            print(word, round(nlpWord.similarity(nlpScenery),3), round(nlpWord.similarity(nlpLandscape),3), round(nlpWord.similarity(nlpSea),3), round(nlpWord.similarity(nlpMuseum),3))
-            if nlpWord.similarity(nlpScenery) >= 0.2 and nlpWord.similarity(nlpLandscape) > 0.25: 
+
+            keepWord = False
+            # print(word,end=' ')
+            for testWord in nlpWords:
+                similarityScore = nlpWord.similarity(testWord)
+                if similarityScore > 0.35:
+                    keepWord = True
+                # print(round(similarityScore,3),end=' ')
+            # print()
+
+            if nlpWord.similarity(nlpScenery) >= 0.3  or keepWord: # and nlpWord.similarity(nlpLandscape)
                 phraseskept.append(word)
                 wordskept.append(word)
                 count += 1
-        if i > 10:
-            break
-        words = []
-        for word in words:
 
-            similar = False
-            
-            nlpWord = nlp(word)
-            if nlpWord.similarity(nlpScenery) >= 0.149 and nlpWord.similarity(nlpLandscape) > 0.1: 
-            # if nlpWord.similarity(nlpFood) >= 0.4 or nlpWord.similarity(nlp(keywords[0])) > 0.4: 
-                # similar = True
+        print(doc['name'])
+        print(doc['types'])
+        print(phraseskept)
+        print('\n')
 
-                totalSimilarity = 0
-                for food in nlpFoodArr:
-                    totalSimilarity += nlpWord.similarity(food)
-                if(totalSimilarity/len(foodArr) >= 0.3):
-                    # print(word, "average similarity", totalSimilarity/len(foodArr))
-                    similar = True
-            
-            if similar:
-                phraseskept.append(word)
-                count += 1
-            else:
-                wordsdel.append(word)
+        vectors = word2vec(phraseskept)
+        query = {"place_id": doc['place_id']}
+        newvalues = {"$set": {"reviews_spacy": vectors,
+                            "tags": phraseskept}}
+        mycol.update_one(query, newvalues)
 
-        # keep the first five words in sorted phrasekept to wordskept
-        # phraseskept.sort(key=lambda doc: doc['similarity'], reverse=True)
-        # for phrase in phraseskept[:5]:
-            # wordskept.append(phrase['phrase'])
 
-    
+        
+        
 
+
+cursor.close()
 myclient.close()
 print(wordskept)
+
+'''
+
 print(count)
 print(totalWords)
 
+nlpWords.append(nlpScenery)
+
+for word in wordskept:
+    print(word)
+    for testWord in nlpWords:
+        print(round(nlp(word).similarity(testWord),3), end=' ')
+    print()
+
+'''  
 
 
 
