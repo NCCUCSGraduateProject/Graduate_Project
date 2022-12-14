@@ -1,3 +1,5 @@
+var computeSimilarity = require( 'compute-cosine-similarity' );
+
 function distance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 == lat2 && lon1 == lon2) {
     return 0;
@@ -61,7 +63,21 @@ function decodePath(encodedPath) {
   };
 }
 
+function documentSimilarity(query_vectors, reviews_spacy) {
+    let max_similarity = 0
+    for(var i = 0; i < query_vectors.length; i++) {
+        for(var j = 0; j < reviews_spacy.length; j++) {
+            let temp_similarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
+            if(temp_similarity > max_similarity){
+                max_similarity = temp_similarity
+            }
+        }
+    }
+    return max_similarity
+}
+
 module.exports ={
   distance:distance,
-  decodePath: decodePath
+  decodePath: decodePath,
+  documentSimilarity: documentSimilarity
 }

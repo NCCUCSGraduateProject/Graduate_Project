@@ -5,15 +5,16 @@ const key = require("../configs/api_key.json").API_KEY
 
 // mongo client
 var {MongoClient, MongoError} = require("mongodb");
-const {distance, decodePath} = require("../utils/util.js")
+const {distance, decodePath, documentSimilarity} = require("../utils/util.js")
 
 //import jsts
 // const import_jsts = require("../utils/jsts.js")
 // var {GeoJSONReader, GeoJSONWriter, BufferOp} = import_jsts
 
-const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
+//const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
+const url = 'mongodb://localhost:57017/';
 
-const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange) => {
+const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange, queryVectors) => {
   const mongoClient = await MongoClient.connect(url)
   
   console.log(originLat, originLng, destLat, destLng, limitDistance)
@@ -91,7 +92,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       const gatewayInfos = database.collection("map");
       
       const options = {
-        projection: { _id:1, "geometry": 1, rating:1, name:1, icon:1, user_ratings_total:1,place_id:1},
+        projection: { _id:1, "geometry": 1, rating:1, name:1, icon:1, user_ratings_total:1,place_id:1, reviews_spacy: 1},
       }
 
 
@@ -105,7 +106,13 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
           }
       }
       }
-      const documents = await gatewayInfos.find(query, options).toArray();
+      let documents = await gatewayInfos.find(query, options).toArray();
+
+      for(var j = 0; j < documents.length; j++){
+
+        documents[j].similarity = documentSimilarity(queryVectors, documents[j].reviews_spacy)
+      }
+
       nearbyArr.push(documents);
 
     }
