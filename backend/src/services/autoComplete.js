@@ -1,5 +1,8 @@
 const API_KEY = require("../configs/api_key.json").API_KEY
 const axios = require('axios')
+var {MongoClient, MongoError} = require("mongodb");
+
+const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
 
 const predict = async (inputStr) => {
 
@@ -14,7 +17,7 @@ const predict = async (inputStr) => {
   var result = []
   response.data.predictions.forEach((item) => {
       let data = {
-          name: item.structured_formatting.main_text,
+          value: item.structured_formatting.main_text,
           address: item.structured_formatting.secondary_text,
           place_id: item.place_id
       }
@@ -27,6 +30,30 @@ const predict = async (inputStr) => {
 
 }
 
+const detail = async (place_id) => {
+  const mongoClient = await MongoClient.connect(url)
+  const db = mongoClient.db("gp")
+  const collection = db.collection("map")
+
+  const query = {
+    place_id: place_id
+  }
+
+  let result = await collection.findOne(query)
+
+  let data = {
+    name: result.name,
+    address: result.vicinity,
+    lat: result.geometry.coordinates[1],
+    lng: result.geometry.coordinates[0],
+    // geometry: result.geometry,
+    place_id: result.place_id
+  }
+
+  return data
+} 
+
 module.exports = {
-  predict: predict
+  predict: predict, 
+  detail: detail
 }
