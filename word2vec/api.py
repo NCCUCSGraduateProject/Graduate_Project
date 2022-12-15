@@ -53,6 +53,7 @@ def index_1():
     inputText = request.args.get('inputText', default = '', type = str)
     print('parameters:',inputText)
     words = filtStopWords(inputText)
+    print('words:',words)
     vectors = word2vec(words)
     return {'vectors': vectors}
 
