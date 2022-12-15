@@ -12,7 +12,7 @@ const {distance, decodePath, documentSimilarity} = require("../utils/util.js")
 // var {GeoJSONReader, GeoJSONWriter, BufferOp} = import_jsts
 
 //const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
-const url = 'mongodb://localhost:57017/';
+const url = 'mongodb://localhost:27017/';
 
 const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange, directionMode, queryVectors) => {
   const mongoClient = await MongoClient.connect(url)
