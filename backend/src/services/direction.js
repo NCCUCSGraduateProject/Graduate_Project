@@ -14,7 +14,7 @@ const {distance, decodePath, documentSimilarity} = require("../utils/util.js")
 //const url = 'mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority';
 const url = 'mongodb://localhost:27017/';
 
-const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange, directionMode, queryVectors) => {
+const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange, directionMode, queryString, queryVectors) => {
   const mongoClient = await MongoClient.connect(url)
   
   console.log(originLat, originLng, destLat, destLng, limitDistance)
@@ -108,8 +108,14 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       }
       let documents = await gatewayInfos.find(query, options).toArray();
 
+      const queryStringArr = queryString.split(" ")
       for(var j = 0; j < documents.length; j++){
-
+        for(var k = 0; k < queryStringArr.length; k++){
+          if(documents[j].name.search(queryStringArr[k]) != -1){
+            documents[j].similarity = 1
+            break
+          }
+        }
         documents[j].similarity = documentSimilarity(queryVectors, documents[j].reviews_spacy)
       }
 
