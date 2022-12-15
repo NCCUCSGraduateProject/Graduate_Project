@@ -117,6 +117,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
           }
         }
         if(documents[j].similarity === 1) continue
+        if(documents[j].reviews_spacy === undefined) documents[j].reviews_spacy = []
         documents[j].similarity = documentSimilarity(queryVectors, documents[j].reviews_spacy)
       }
 
