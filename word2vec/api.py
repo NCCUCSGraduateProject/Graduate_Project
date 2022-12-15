@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS
 from gevent import pywsgi
 import jieba
 import spacy
@@ -43,6 +44,7 @@ def word2vec(words):
 
 
 app = Flask(__name__)
+CORS(app)
 @app.route('/test', methods=['get'])
 def index():
     
