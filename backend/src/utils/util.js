@@ -70,8 +70,8 @@ function documentSimilarity(query_vectors, reviews_spacy) {
             let temp_similarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
             if(temp_similarity > max_similarity){
                 max_similarity = temp_similarity
-            } else if(max_similarity >= 0.99 && temp_similarity + max_similarity > max_similarity) {
-                max_similarity = temp_similarity + max_similarity
+            } else if(max_similarity >= 0.99 && temp_similarity + 1 > max_similarity) {
+                max_similarity = temp_similarity + 1
             }
         }
     }
