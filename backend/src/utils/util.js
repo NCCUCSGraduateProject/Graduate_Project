@@ -64,7 +64,7 @@ function decodePath(encodedPath) {
 }
 
 function documentSimilarity(query_vectors, reviews_spacy) {
-    let max_similarity = -1
+    let max_similarity = 0
     for(var i = 0; i < query_vectors.length; i++) {
         for(var j = 0; j < reviews_spacy.length; j++) {
             let temp_similarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
