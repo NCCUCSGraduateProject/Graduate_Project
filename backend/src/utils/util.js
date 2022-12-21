@@ -1,4 +1,5 @@
-var computeSimilarity = require( 'compute-cosine-similarity' );
+const computeSimilarity = require( 'compute-cosine-similarity' );
+const Annoy = require('annoy');
 
 function distance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 == lat2 && lon1 == lon2) {
@@ -63,19 +64,29 @@ function decodePath(encodedPath) {
   };
 }
 
-function documentSimilarity(query_vectors, reviews_spacy) {
-    let max_similarity = 0
-    for(var i = 0; i < query_vectors.length; i++) {
-        for(var j = 0; j < reviews_spacy.length; j++) {
-            let temp_similarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
-            if(temp_similarity > max_similarity){
-                max_similarity = temp_similarity
-            } else if(max_similarity >= 0.99 && temp_similarity + 1 > max_similarity) {
-                max_similarity = temp_similarity + 1
-            }
-        }
+function documentSimilarity(query_vectors, reviews_spacy ,place_id) {
+
+  let max_similarity = 0 
+
+  let tree = new Annoy(300, 'angular')
+
+  try{
+    tree.load('./../../AnnTrees/' + place_id + '.ann')
+  } catch (err) {
+    // do nothing
+    return 0 // return 1(the lowest similarity score) if no reviews
+  }
+
+  for(let i =0; i < query_vectors.length; i++) {
+    let result = tree.getNNsByVector(query_vectors[i], 1, 1, false)
+    let similarity = computeSimilarity(query_vectors[i], reviews_spacy[result[0]])
+    // console.log(similarity)
+    if(similarity > max_similarity) {
+      max_similarity = similarity
     }
-    return max_similarity
+  }
+
+  return max_similarity + 1
 }
 
 module.exports ={
