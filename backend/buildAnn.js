@@ -21,7 +21,7 @@ fs.readFile('placeIDs.txt', 'utf8', async (err, data) => {
 
         let tree = new Annoy(300, 'angular')
         
-        if(document['reviews_spacy'] !== undefined){
+        if(document['reviews_spacy'].length > 0){
             let reviews_spacy = document.reviews_spacy
             for(let j = 0; j < reviews_spacy.length; j++) {
                 tree.addItem(j, reviews_spacy[j])
