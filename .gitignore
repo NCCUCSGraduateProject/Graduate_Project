@@ -164,3 +164,6 @@ api_key.json
 .DS_Store
 
 node_modules
+
+# ann trees
+*.ann
