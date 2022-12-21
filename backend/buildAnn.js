@@ -17,11 +17,11 @@ fs.readFile('placeIDs.txt', 'utf8', async (err, data) => {
     const collection = db.collection("map")
 
     for(let i = 0; i < placeIDs.length; i++) {
-        const document = await collection.findOne({place_id: 'ChIJPe6kAKONbzQR4P4I1CExJFs'})
+        const document = await collection.findOne({place_id: placeIDs[i]})
 
         let tree = new Annoy(300, 'angular')
         
-        if(document['reviews_spacy'].length > 0){
+        if(document.reviews_spacy && document.reviews_spacy.length > 0){
             let reviews_spacy = document.reviews_spacy
             for(let j = 0; j < reviews_spacy.length; j++) {
                 tree.addItem(j, reviews_spacy[j])
