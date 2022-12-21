@@ -18,7 +18,6 @@ fs.readFile('placeIDs.txt', 'utf8', async (err, data) => {
 
     for(let i = 0; i < placeIDs.length; i++) {
         const document = await collection.findOne({place_id: 'ChIJPe6kAKONbzQR4P4I1CExJFs'})
-        console.log(document)
 
         let tree = new Annoy(300, 'angular')
         
