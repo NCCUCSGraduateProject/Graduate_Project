@@ -17,6 +17,9 @@ fs.readFile('placeIDs.txt', 'utf8', async (err, data) => {
     const collection = db.collection("map")
 
     for(let i = 0; i < placeIDs.length; i++) {
+
+        console.log(i)
+
         const document = await collection.findOne({place_id: placeIDs[i]})
 
         let tree = new Annoy(300, 'angular')
@@ -31,8 +34,6 @@ fs.readFile('placeIDs.txt', 'utf8', async (err, data) => {
             let path = './AnnTrees/' + placeIDs[i] + '.ann'
             tree.save(path)
         }
-        if(i % 100 === 0) 
-            console.log(i)
         
         
     }
