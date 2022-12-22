@@ -66,7 +66,7 @@ function decodePath(encodedPath) {
 }
 
 function documentSimilarity(query_vectors, reviews_spacy ,place_id) {
-
+/*
   let max_similarity = 0 
 
   let tree = new Annoy(300, 'angular')
@@ -93,8 +93,8 @@ function documentSimilarity(query_vectors, reviews_spacy ,place_id) {
   }
 
   return max_similarity + 1
-
-  /*
+*/
+  
   let max_similarity = 0
     for(var i = 0; i < query_vectors.length; i++) {
         for(var j = 0; j < reviews_spacy.length; j++) {
@@ -107,7 +107,7 @@ function documentSimilarity(query_vectors, reviews_spacy ,place_id) {
         }
     }
     return max_similarity
-  */
+  
 }
 
 module.exports ={
