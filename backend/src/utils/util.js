@@ -1,5 +1,6 @@
 const computeSimilarity = require( 'compute-cosine-similarity' );
 const Annoy = require('annoy');
+const fs = require('fs');
 
 function distance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 == lat2 && lon1 == lon2) {
@@ -70,12 +71,17 @@ function documentSimilarity(query_vectors, reviews_spacy ,place_id) {
 
   let tree = new Annoy(300, 'angular')
 
-  try{
-    tree.load('./../../AnnTrees/' + place_id + '.ann')
-  } catch (err) {
-    // do nothing
-    return 0 // return 1(the lowest similarity score) if no reviews
+  let path = './../../AnnTrees/' + place_id + '.ann'
+  // check path exists
+  if(fs.existsSync(path)) {
+    tree.load(path)
+  } else {
+    return 0 // return 0(the lowest similarity score) if no reviews
   }
+
+  // deal with the case if tree is empty
+  if(tree.getNItems() < 1) 
+    return 0
 
   for(let i =0; i < query_vectors.length; i++) {
     let result = tree.getNNsByVector(query_vectors[i], 1, 1, false)
