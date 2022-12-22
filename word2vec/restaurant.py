@@ -48,11 +48,11 @@ def word2vec2(words):
 
 import pymongo
 
-remoteUrl = "mongodb+srv://mark:WNQmnmMW1Eob4gFi@cluster0.gvyaavk.mongodb.net/?retryWrites=true&w=majority"
+remoteUrl = "mongodb://localhost:57017"
 localUrl = "mongodb://localhost:27017"
 myclient = pymongo.MongoClient(localUrl)
-mydb = myclient["placeAPI"]
-mycol = mydb["test4"]
+mydb = myclient["gp"]
+mycol = mydb["map"]
 
 print('connect mongo\n')
 
@@ -69,6 +69,8 @@ nlpFoodArr = [ nlp(x) for x in foodArr]
 cursor = mycol.find({}, no_cursor_timeout=True,batch_size=10)
 for doc in cursor:
     #print(len(doc['reviews']))
+    if 'tags' not in doc:
+        continue
     words = filtStopWords(doc['reviews'])
     # print("words: ",words)
     i += 1
