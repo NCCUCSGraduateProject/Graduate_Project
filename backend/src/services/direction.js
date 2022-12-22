@@ -82,20 +82,20 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       // }
       // console.log("Result:")
       
-      console.log(polygon.coordinates)
+      // console.log(polygon.coordinates)
       
       
       // =========   mongo query =======
 
 
       const database = mongoClient.db("gp");
-      const gatewayInfos = database.collection("map");
+      const collection = database.collection("map");
       
       const options = {
         projection: { _id:1, "geometry": 1, rating:1, name:1, icon:1, user_ratings_total:1,place_id:1, reviews_spacy: 1},
       }
 
-
+      const startQuery = new Date().getTime()
       const query = {
       geometry: {
           $geoWithin: {
@@ -106,7 +106,10 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
           }
       }
       }
-      let documents = await gatewayInfos.find(query, options).toArray();
+      let documents = await collection.find(query, options).toArray();
+
+      const endQuery = new Date().getTime()
+      console.log("Query time: ", endQuery - startQuery)
 
       const queryStringArr = queryString.split(" ")
       for(var j = 0; j < documents.length; j++){
@@ -123,7 +126,10 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
 
       nearbyArr.push(documents);
 
+      const endSimilarity = new Date().getTime()
+      console.log("Similarity time: ", endSimilarity - endQuery)
     }
+
     
     
     // for(var i = pathArr.length-1; i >=0; i-=10 ){
@@ -131,7 +137,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     //   //((1000*limitDistance)/3963.2)/1609
     //   //const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat],  1] } } }
     //   const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat],  ((1000*limitDistance)/3963.2)/1609] } } }
-    //   const documents = await gatewayInfos.find(query, options).toArray();
+    //   const documents = await collection.find(query, options).toArray();
     //   console.log(documents)
     //   for(var j = 0; j < documents.length; j++){
     //     resultMap.set(documents[j].place_id, documents[j])
@@ -144,7 +150,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       paths: pathObjectArr
     }
 
-    console.log(result.nearbys)
+    // console.log(result.nearbys)
     return result
   }
   catch(error){
