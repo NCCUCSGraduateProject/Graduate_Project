@@ -92,7 +92,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       const collection = database.collection("map");
 
       const options = {
-        projection: { _id: 1, "geometry": 1, rating: 1, name: 1, icon: 1, user_ratings_total: 1, place_id: 1, reviews_spacy: 1 },
+        projection: { _id: 1, "geometry": 1, rating: 1, name: 1, icon: 1, user_ratings_total: 1, place_id: 1, reviews_spacy: 1, tags: 1 },
       }
 
       const startQuery = new Date().getTime()
@@ -114,15 +114,15 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       if (queryString.length > 0) {
         const queryStringArr = queryString.split(" ")
         for (var j = 0; j < documents.length; j++) {
+          documents[j].similarity = 0
           for (var k = 0; k < queryStringArr.length; k++) {
             if (documents[j].name.search(queryStringArr[k]) != -1) {
               documents[j].similarity = 1
               break
             }
           }
-          if (documents[j].similarity === 1) continue
           if (documents[j].reviews_spacy === undefined) documents[j].reviews_spacy = []
-          documents[j].similarity = documentSimilarity(queryVectors, documents[j].reviews_spacy, documents[j].place_id)
+          documents[j].similarity += documentSimilarity(queryVectors, documents[j].reviews_spacy, documents[j].place_id)
           delete documents[j].reviews_spacy
         }
 
@@ -139,6 +139,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       }
     }
 
+    console.log(nearbyArr)
     let result = {
       nearbys: nearbyArr,
       paths: pathObjectArr

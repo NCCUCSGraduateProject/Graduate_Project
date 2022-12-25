@@ -1,0 +1,593 @@
+load model
+
+create stop words
+
+
+stop words created
+
+filter test:
+
+
+server started
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 12:23:32] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000865
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 12:24:33] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000595
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 13:02:43] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001415
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 13:02:56] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000504
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:15:09] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000594
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:15:51] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000575
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:17:57] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000640
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:21:15] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000559
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:21:19] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000574
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:21:25] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000637
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:21:40] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000568
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:22:15] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000748
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:22:46] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000565
+parameters: 便宜 早餐
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.439 seconds.
+Prefix dict has been built succesfully.
+words: {'早餐', '便宜'}
+127.0.0.1 - - [2022-12-25 18:23:01] "GET /word2Vec?inputText=%E4%BE%BF%E5%AE%9C+%E6%97%A9%E9%A4%90 HTTP/1.0" 200 11762 0.465650
+parameters: 早餐
+words: {'早餐'}
+127.0.0.1 - - [2022-12-25 18:23:07] "GET /word2Vec?inputText=%E6%97%A9%E9%A4%90 HTTP/1.0" 200 5982 0.006618
+parameters: 便宜 早餐
+words: {'早餐', '便宜'}
+127.0.0.1 - - [2022-12-25 18:23:07] "GET /word2Vec?inputText=%e4%be%bf%e5%ae%9c+%e6%97%a9%e9%a4%90 HTTP/1.0" 200 11762 0.014362
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 18:23:56] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000540
+parameters: 餐廳
+words: {'餐廳'}
+127.0.0.1 - - [2022-12-25 18:24:10] "GET /word2Vec?inputText=%E9%A4%90%E5%BB%B3 HTTP/1.0" 200 5937 0.005938
+parameters: 餐廳
+words: {'餐廳'}
+127.0.0.1 - - [2022-12-25 18:24:23] "GET /word2Vec?inputText=%e9%a4%90%e5%bb%b3 HTTP/1.0" 200 5937 0.005718
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:07:21] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5963 0.005929
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:07:58] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5963 0.005849
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:08:09] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5963 0.005921
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:08:44] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5963 0.005902
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:09:18] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5963 0.005755
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:09:35] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5963 0.005686
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:32:40] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000639
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:41:50] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.001710
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:42:08] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000678
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:42:57] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000621
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:43:52] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000703
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:44:09] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5997 0.010686
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:46:18] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5997 0.006413
+parameters: 小吃
+words: {'小吃'}
+127.0.0.1 - - [2022-12-25 19:47:27] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83 HTTP/1.0" 200 5997 0.007649
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:48:08] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000724
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:49:08] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000687
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:55:11] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000703
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:57:09] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000784
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 19:57:37] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000664
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:02:40] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000803
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:03:18] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000652
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:03:20] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000697
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:04:04] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000738
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:08:26] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000751
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:08:37] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000693
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:08:43] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000776
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:09:03] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000641
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:11:17] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000708
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:11:22] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000702
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:11:56] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000695
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:12:01] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000649
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:14:02] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000681
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:14:08] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000670
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:14:29] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000719
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:14:33] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000586
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:18:46] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000721
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:18:50] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000768
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:20:40] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000706
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:22:09] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000699
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:22:28] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000695
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:23:26] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.001085
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:23:59] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000719
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:24:14] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000687
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:25:26] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000672
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:28:21] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000668
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:28:34] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000842
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:28:57] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000616
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:31:58] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000719
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:32:28] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000704
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:35:47] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000709
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:36:28] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000609
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:36:38] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000750
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:37:58] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000719
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:38:05] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000732
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:40:38] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000752
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:45:23] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000680
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:48:08] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000709
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 20:49:37] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000679
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:00:22] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000701
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:05:36] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000645
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:05:45] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000662
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:06:58] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000668
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:07:25] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000572
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:08:45] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000568
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:09:53] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000693
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:11:03] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000664
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:11:16] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000648
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:12:15] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000799
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:12:19] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000702
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:15:14] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000780
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:15:39] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000782
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:17:00] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000711
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:17:22] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000695
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:17:58] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000943
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:18:18] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000746
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:19:43] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000706
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:20:32] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000749
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:21:20] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000589
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:28:09] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000669
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:28:37] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000670
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:29:47] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000580
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:30:05] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000754
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:32:39] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000624
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:32:49] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000685
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:34:19] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000729
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:35:25] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000867
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:37:53] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000853
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:38:09] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000795
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:39:38] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000687
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:40:15] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000643
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:41:31] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.001273
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:41:55] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000685
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:42:05] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000744
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:42:11] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000702
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:43:32] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000681
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:44:30] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000637
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:44:51] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000638
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:46:52] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000601
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:47:24] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000678
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:48:40] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000662
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:49:27] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000654
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 21:49:47] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000690
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:00:18] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000651
+parameters: 麵
+words: {'麵'}
+127.0.0.1 - - [2022-12-25 22:00:55] "GET /word2Vec?inputText=%E9%BA%B5 HTTP/1.0" 200 6009 0.013035
+parameters: 麵
+words: {'麵'}
+127.0.0.1 - - [2022-12-25 22:01:08] "GET /word2Vec?inputText=%e9%ba%b5 HTTP/1.0" 200 5975 0.007610
+parameters: 麵
+words: {'麵'}
+127.0.0.1 - - [2022-12-25 22:01:59] "GET /word2Vec?inputText=%E9%BA%B5 HTTP/1.0" 200 6009 0.006906
+parameters: 麵 小吃
+words: {'麵', '小吃'}
+127.0.0.1 - - [2022-12-25 22:02:29] "GET /word2Vec?inputText=%E9%BA%B5+%E5%B0%8F%E5%90%83 HTTP/1.0" 200 11798 0.011101
+parameters: 麵 小吃
+words: {'麵', '小吃'}
+127.0.0.1 - - [2022-12-25 22:02:39] "GET /word2Vec?inputText=%e9%ba%b5+%e5%b0%8f%e5%90%83 HTTP/1.0" 200 11764 0.010758
+parameters: 麵 小吃
+words: {'麵', '小吃'}
+127.0.0.1 - - [2022-12-25 22:09:20] "GET /word2Vec?inputText=%E9%BA%B5+%E5%B0%8F%E5%90%83 HTTP/1.0" 200 11798 0.012475
+127.0.0.1 - - [2022-12-25 22:09:32] "GET /word2vec?inputtext=%e9%ba%b5+%e5%b0%8f%e5%90%83 HTTP/1.0" 404 382 0.011412
+parameters: 麵 小吃
+words: {'麵', '小吃'}
+127.0.0.1 - - [2022-12-25 22:13:01] "GET /word2Vec?inputText=%E9%BA%B5+%E5%B0%8F%E5%90%83 HTTP/1.0" 200 11798 0.010262
+parameters: 麵 小吃
+words: {'麵', '小吃'}
+127.0.0.1 - - [2022-12-25 22:13:29] "GET /word2Vec?inputText=%E9%BA%B5+%E5%B0%8F%E5%90%83 HTTP/1.0" 200 11798 0.010700
+parameters: 小吃 麵食
+words: {'小吃', '麵食'}
+127.0.0.1 - - [2022-12-25 22:15:56] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83+%E9%BA%B5%E9%A3%9F HTTP/1.0" 200 11834 0.014029
+parameters: 小吃 麵食
+words: {'小吃', '麵食'}
+127.0.0.1 - - [2022-12-25 22:16:16] "GET /word2Vec?inputText=%e5%b0%8f%e5%90%83+%e9%ba%b5%e9%a3%9f HTTP/1.0" 200 11800 0.011703
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:16:37] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000570
+parameters: 小吃 麵食
+words: {'小吃', '麵食'}
+127.0.0.1 - - [2022-12-25 22:16:48] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83+%E9%BA%B5%E9%A3%9F HTTP/1.0" 200 11834 0.012588
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:18:20] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000770
+parameters: 麵食 小吃
+words: {'小吃', '麵食'}
+127.0.0.1 - - [2022-12-25 22:18:29] "GET /word2Vec?inputText=%E9%BA%B5%E9%A3%9F+%E5%B0%8F%E5%90%83 HTTP/1.0" 200 11834 0.011480
+parameters: 麵食 小吃
+words: {'小吃', '麵食'}
+127.0.0.1 - - [2022-12-25 22:18:43] "GET /word2Vec?inputText=%e9%ba%b5%e9%a3%9f+%e5%b0%8f%e5%90%83 HTTP/1.0" 200 11800 0.010832
+parameters: 小吃 麵食
+words: {'小吃', '麵食'}
+127.0.0.1 - - [2022-12-25 22:19:00] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83+%E9%BA%B5%E9%A3%9F HTTP/1.0" 200 11834 0.011612
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:19:25] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000690
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:20:01] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000783
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:22:41] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000891
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:23:23] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000778
+parameters: 遊憩 放鬆
+words: {'遊憩', '放鬆'}
+127.0.0.1 - - [2022-12-25 22:23:39] "GET /word2Vec?inputText=%E9%81%8A%E6%86%A9+%E6%94%BE%E9%AC%86 HTTP/1.0" 200 11832 0.013228
+parameters: 遊憩 放鬆
+words: {'遊憩', '放鬆'}
+127.0.0.1 - - [2022-12-25 22:23:53] "GET /word2Vec?inputText=%e9%81%8a%e6%86%a9+%e6%94%be%e9%ac%86 HTTP/1.0" 200 11798 0.012180
+parameters: 1234adasddasd ji我喵喵 吃飯
+words: {'喵喵', '吃飯', '1234adasddasdji'}
+127.0.0.1 - - [2022-12-25 22:24:22] "GET /word2Vec?inputText=1234adasddasd+ji%E6%88%91%E5%96%B5%E5%96%B5+%E5%90%83%E9%A3%AF HTTP/1.0" 200 13052 0.034046
+parameters: 1234adasddasd ji我喵喵 吃飯
+words: {'喵喵', '吃飯', '1234adasddasdji'}
+127.0.0.1 - - [2022-12-25 22:24:26] "GET /word2Vec?inputText=1234adasddasd+ji%e6%88%91%e5%96%b5%e5%96%b5+%e5%90%83%e9%a3%af HTTP/1.0" 200 13018 0.016486
+parameters: 我喵喵 吃飯
+words: {'喵喵', '吃飯'}
+127.0.0.1 - - [2022-12-25 22:24:46] "GET /word2Vec?inputText=%E6%88%91%E5%96%B5%E5%96%B5+%E5%90%83%E9%A3%AF HTTP/1.0" 200 11850 0.011635
+parameters: 我喵喵 吃飯
+words: {'喵喵', '吃飯'}
+127.0.0.1 - - [2022-12-25 22:24:51] "GET /word2Vec?inputText=%e6%88%91%e5%96%b5%e5%96%b5+%e5%90%83%e9%a3%af HTTP/1.0" 200 11816 0.013149
+parameters: 我想吃點特別的
+words: {'吃', '點', '想', '特別'}
+127.0.0.1 - - [2022-12-25 22:26:16] "GET /word2Vec?inputText=%E6%88%91%E6%83%B3%E5%90%83%E9%BB%9E%E7%89%B9%E5%88%A5%E7%9A%84 HTTP/1.0" 200 23327 0.029157
+parameters: 我想吃點特別的
+words: {'吃', '點', '想', '特別'}
+127.0.0.1 - - [2022-12-25 22:26:25] "GET /word2Vec?inputText=%e6%88%91%e6%83%b3%e5%90%83%e9%bb%9e%e7%89%b9%e5%88%a5%e7%9a%84 HTTP/1.0" 200 23293 0.020704
+parameters: 我想吃點特別的
+words: {'吃', '點', '想', '特別'}
+127.0.0.1 - - [2022-12-25 22:37:19] "GET /word2Vec?inputText=%E6%88%91%E6%83%B3%E5%90%83%E9%BB%9E%E7%89%B9%E5%88%A5%E7%9A%84 HTTP/1.0" 200 23327 0.019209
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:37:19] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000628
+parameters: 我想吃點特別的
+words: {'吃', '點', '想', '特別'}
+127.0.0.1 - - [2022-12-25 22:37:29] "GET /word2Vec?inputText=%E6%88%91%E6%83%B3%E5%90%83%E9%BB%9E%E7%89%B9%E5%88%A5%E7%9A%84 HTTP/1.0" 200 23327 0.019677
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:37:29] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000652
+parameters: 我想吃點特別的
+words: {'吃', '點', '想', '特別'}
+127.0.0.1 - - [2022-12-25 22:37:34] "GET /word2Vec?inputText=%E6%88%91%E6%83%B3%E5%90%83%E9%BB%9E%E7%89%B9%E5%88%A5%E7%9A%84 HTTP/1.0" 200 23327 0.018105
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:37:35] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000685
+127.0.0.1 - - [2022-12-25 22:37:37] "GET /word2vec?inputtext=%e6%88%91%e6%83%b3%e5%90%83%e9%bb%9e%e7%89%b9%e5%88%a5%e7%9a%84 HTTP/1.0" 404 382 0.000530
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 22:39:45] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000614
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:38:04] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001147
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:39:18] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000666
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:40:57] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000592
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:41:20] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000668
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:41:53] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000659
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:41:55] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000625
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:41:58] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000629
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:01] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000592
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:12] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001752
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:13] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001393
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:14] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000887
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:15] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000899
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:33] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000791
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:34] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000972
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:35] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000856
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:36] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001467
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:37] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001231
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:38] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001570
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:38] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000776
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:51] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000624
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:51] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000849
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:52] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001456
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:53] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.001397
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:54] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000903
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:54] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000754
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:56] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000592
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:57] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000801
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:42:57] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000725
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:43:13] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000601
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:43:23] "GET /word2Vec?inputText= HTTP/1.0" 200 208 0.000692
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:44:00] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000804
+parameters: 早餐
+words: {'早餐'}
+127.0.0.1 - - [2022-12-25 23:44:43] "GET /word2Vec?inputText=%E6%97%A9%E9%A4%90 HTTP/1.0" 200 6017 0.055358
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:45:18] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000643
+parameters: 小吃 麵
+words: {'麵', '小吃'}
+127.0.0.1 - - [2022-12-25 23:45:45] "GET /word2Vec?inputText=%E5%B0%8F%E5%90%83+%E9%BA%B5 HTTP/1.0" 200 11764 0.010202
+parameters: 
+words: set()
+127.0.0.1 - - [2022-12-25 23:46:26] "GET /word2Vec?inputText= HTTP/1.0" 200 174 0.000624

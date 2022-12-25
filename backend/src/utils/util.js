@@ -1,4 +1,4 @@
-const computeSimilarity = require( 'compute-cosine-similarity' );
+const computeSimilarity = require('compute-cosine-similarity');
 const Annoy = require('annoy');
 const fs = require('fs');
 
@@ -37,25 +37,25 @@ function decodePath(encodedPath) {
   let lng = 0;
   let pointIndex;
   for (pointIndex = 0; index < len; ++pointIndex) {
-      let result = 1;
-      let shift = 0;
-      let b;
-      do {
-          b = encodedPath.charCodeAt(index++) - 63 - 1;
-          result += b << shift;
-          shift += 5;
-      } while (b >= 0x1f);
-      lat += result & 1 ? ~(result >> 1) : result >> 1;
-      result = 1;
-      shift = 0;
-      do {
-          b = encodedPath.charCodeAt(index++) - 63 - 1;
-          result += b << shift;
-          shift += 5;
-      } while (b >= 0x1f);
-      lng += result & 1 ? ~(result >> 1) : result >> 1;
-      path[pointIndex] = [ lng * 1e-5, lat * 1e-5  ];
-      pathObject[pointIndex] = { lat: lat * 1e-5, lng: lng * 1e-5 }
+    let result = 1;
+    let shift = 0;
+    let b;
+    do {
+      b = encodedPath.charCodeAt(index++) - 63 - 1;
+      result += b << shift;
+      shift += 5;
+    } while (b >= 0x1f);
+    lat += result & 1 ? ~(result >> 1) : result >> 1;
+    result = 1;
+    shift = 0;
+    do {
+      b = encodedPath.charCodeAt(index++) - 63 - 1;
+      result += b << shift;
+      shift += 5;
+    } while (b >= 0x1f);
+    lng += result & 1 ? ~(result >> 1) : result >> 1;
+    path[pointIndex] = [lng * 1e-5, lat * 1e-5];
+    pathObject[pointIndex] = { lat: lat * 1e-5, lng: lng * 1e-5 }
   }
   path.length = pointIndex;
   pathObject.length = pointIndex;
@@ -65,53 +65,66 @@ function decodePath(encodedPath) {
   };
 }
 
-function documentSimilarity(query_vectors, reviews_spacy ,place_id) {
-/*
-  let max_similarity = 0 
+function documentSimilarity(query_vectors, reviews_spacy, place_id) {
+  /*
+    let max_similarity = 0 
+  
+    let tree = new Annoy(300, 'angular')
+  
+    let path = './../../AnnTrees/' + place_id + '.ann'
+    // check path exists
+    if(fs.existsSync(path)) {
+      tree.load(path)
+    } else {
+      return 0 // return 0(the lowest similarity score) if no reviews
+    }
+  
+    // deal with the case if tree is empty
+    if(tree.getNItems() < 1) 
+      return 0
+  
+    for(let i =0; i < query_vectors.length; i++) {
+      let result = tree.getNNsByVector(query_vectors[i], 1, 1, false)
+      let similarity = computeSimilarity(query_vectors[i], reviews_spacy[result[0]])
+      // console.log(similarity)
+      if(similarity > max_similarity) {
+        max_similarity = similarity
+      }
+    }
+  
+    return max_similarity + 1
+  */
 
-  let tree = new Annoy(300, 'angular')
+  // let max_similarity = 0
+  // for (var i = 0; i < query_vectors.length; i++) {
+  //   for (var j = 0; j < reviews_spacy.length; j++) {
+  //     let temp_similarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
+  //     if (temp_similarity > max_similarity) {
+  //       max_similarity = temp_similarity
+  //     } else if (max_similarity >= 0.99 && temp_similarity + 1 > max_similarity) {
+  //       max_similarity = temp_similarity + 1
+  //     }
+  //   }
+  // }
+  // return max_similarity
 
-  let path = './../../AnnTrees/' + place_id + '.ann'
-  // check path exists
-  if(fs.existsSync(path)) {
-    tree.load(path)
-  } else {
-    return 0 // return 0(the lowest similarity score) if no reviews
-  }
+  let totalSimilarity = 0
+  let countAdd = 0
+  for(let i=0; i < query_vectors.length; i++){
+    for(let j=0; j < reviews_spacy.length; j++) {
+      const tempSimilarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
+      if(tempSimilarity < 0.5) continue
 
-  // deal with the case if tree is empty
-  if(tree.getNItems() < 1) 
-    return 0
-
-  for(let i =0; i < query_vectors.length; i++) {
-    let result = tree.getNNsByVector(query_vectors[i], 1, 1, false)
-    let similarity = computeSimilarity(query_vectors[i], reviews_spacy[result[0]])
-    // console.log(similarity)
-    if(similarity > max_similarity) {
-      max_similarity = similarity
+      totalSimilarity += tempSimilarity
+      countAdd += 1
     }
   }
 
-  return max_similarity + 1
-*/
-  
-  let max_similarity = 0
-    for(var i = 0; i < query_vectors.length; i++) {
-        for(var j = 0; j < reviews_spacy.length; j++) {
-            let temp_similarity = computeSimilarity(query_vectors[i], reviews_spacy[j])
-            if(temp_similarity > max_similarity){
-                max_similarity = temp_similarity
-            } else if(max_similarity >= 0.99 && temp_similarity + 1 > max_similarity) {
-                max_similarity = temp_similarity + 1
-            }
-        }
-    }
-    return max_similarity
-  
+  return totalSimilarity / countAdd
 }
 
-module.exports ={
-  distance:distance,
+module.exports = {
+  distance: distance,
   decodePath: decodePath,
   documentSimilarity: documentSimilarity
 }
