@@ -1,11 +1,11 @@
 // google client
-const {Client} = require("@googlemaps/google-maps-services-js");
+const { Client } = require("@googlemaps/google-maps-services-js");
 const client = new Client({})
 const key = require("../configs/api_key.json").API_KEY
 
 // mongo client
-var {MongoClient, MongoError} = require("mongodb");
-const {distance, decodePath, documentSimilarity} = require("../utils/util.js")
+var { MongoClient, MongoError } = require("mongodb");
+const { distance, decodePath, documentSimilarity } = require("../utils/util.js")
 
 //import jsts
 // const import_jsts = require("../utils/jsts.js")
@@ -16,14 +16,14 @@ const url = 'mongodb://localhost:27017/';
 
 const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistance, splitRange, directionMode, queryString, queryVectors) => {
   const mongoClient = await MongoClient.connect(url)
-  
+
   console.log(originLat, originLng, destLat, destLng, limitDistance)
 
-  try{
-    
+  try {
+
     // ======== google map =======
-    var originLatLng = {latitude: originLat, longitude: originLng}
-    var destLatLng = {latitude: destLat, longitude: destLng}
+    var originLatLng = { latitude: originLat, longitude: originLng }
+    var destLatLng = { latitude: destLat, longitude: destLng }
     const params = {
       origin: originLatLng,
       destination: destLatLng,
@@ -31,7 +31,7 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       key: key
     };
 
-    let response = await client.directions({params:params})
+    let response = await client.directions({ params: params })
     // console.log(response.data)
     let steps = response.data.routes[0].legs[0].steps
     let pathArr = []
@@ -39,38 +39,38 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
     let tempPathArr = []
     let tempPathObjectArr = []
     let tempDistance = 0
-    for(var i = 0; i < steps.length; ++i){
-      const {path, pathObject} = decodePath(steps[i].polyline.points)
-      
+    for (var i = 0; i < steps.length; ++i) {
+      const { path, pathObject } = decodePath(steps[i].polyline.points)
+
       tempDistance += steps[i].distance.value
       tempPathArr.push(path)
       tempPathObjectArr.push(pathObject)
-      
-      if(tempDistance >= splitRange || i == steps.length - 1){
+
+      if (tempDistance >= splitRange || i == steps.length - 1) {
         pathArr.push(tempPathArr.flat())
         pathObjectArr.push(tempPathObjectArr.flat())
         tempDistance = 0
         tempPathArr = []
         tempPathObjectArr = []
       }
-      
+
     }
     // pathArr = pathArr.flat()
     // pathObjectArr = pathObjectArr.flat()
-    
+
 
     // ========= jsts ===========
-    const {default: GeoJSONReader}  = await import('jsts/org/locationtech/jts/io/GeoJSONReader.js')
-    const {default: GeoJSONWriter}  = await import('jsts/org/locationtech/jts/io/GeoJSONWriter.js')
+    const { default: GeoJSONReader } = await import('jsts/org/locationtech/jts/io/GeoJSONReader.js')
+    const { default: GeoJSONWriter } = await import('jsts/org/locationtech/jts/io/GeoJSONWriter.js')
     const { BufferOp } = await import('jsts/org/locationtech/jts/operation/buffer.js')
-    
+
     let nearbyArr = []
-    for(var i = 0; i < pathArr.length; ++i) {
+    for (var i = 0; i < pathArr.length; ++i) {
       var geoInput = {
         type: "LineString",
         coordinates: pathArr[i],
       };
-      
+
       var geoReader = new GeoJSONReader()
       var geoWriter = new GeoJSONWriter();
       var geometry = geoReader.read(geoInput)
@@ -81,82 +81,75 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
       //     console.log(geoInput.coordinates[i]);
       // }
       // console.log("Result:")
-      
+
       // console.log(polygon.coordinates)
-      
-      
+
+
       // =========   mongo query =======
 
 
       const database = mongoClient.db("gp");
       const collection = database.collection("map");
-      
+
       const options = {
-        projection: { _id:1, "geometry": 1, rating:1, name:1, icon:1, user_ratings_total:1,place_id:1, reviews_spacy: 1},
+        projection: { _id: 1, "geometry": 1, rating: 1, name: 1, icon: 1, user_ratings_total: 1, place_id: 1, reviews_spacy: 1 },
       }
 
       const startQuery = new Date().getTime()
       const query = {
-      geometry: {
+        geometry: {
           $geoWithin: {
-          $geometry: {
-              type : "Polygon" ,
+            $geometry: {
+              type: "Polygon",
               coordinates: polygon.coordinates
+            }
           }
-          }
-      }
+        }
       }
       let documents = await collection.find(query, options).toArray();
 
       const endQuery = new Date().getTime()
       console.log("Query time: ", endQuery - startQuery)
 
-      const queryStringArr = queryString.split(" ")
-      for(var j = 0; j < documents.length; j++){
-        for(var k = 0; k < queryStringArr.length; k++){
-          if(documents[j].name.search(queryStringArr[k]) != -1){
-            documents[j].similarity = 1
-            break
+      if (queryString.length > 0) {
+        const queryStringArr = queryString.split(" ")
+        for (var j = 0; j < documents.length; j++) {
+          for (var k = 0; k < queryStringArr.length; k++) {
+            if (documents[j].name.search(queryStringArr[k]) != -1) {
+              documents[j].similarity = 1
+              break
+            }
           }
+          if (documents[j].similarity === 1) continue
+          if (documents[j].reviews_spacy === undefined) documents[j].reviews_spacy = []
+          documents[j].similarity = documentSimilarity(queryVectors, documents[j].reviews_spacy, documents[j].place_id)
+          delete documents[j].reviews_spacy
         }
-        if(documents[j].similarity === 1) continue
-        if(documents[j].reviews_spacy === undefined) documents[j].reviews_spacy = []
-        documents[j].similarity = documentSimilarity(queryVectors, documents[j].reviews_spacy, documents[j].place_id)
+
+        nearbyArr.push(documents);
+
+        const endSimilarity = new Date().getTime()
+        console.log("Similarity time: ", endSimilarity - endQuery)
+      } else {
+        for (let i = 0; i < documents.length; i++) {
+          documents[i].similarity = 0
+          delete documents[i].reviews_spacy
+        }
+        nearbyArr.push(documents);
       }
-
-      nearbyArr.push(documents);
-
-      const endSimilarity = new Date().getTime()
-      console.log("Similarity time: ", endSimilarity - endQuery)
     }
 
-    
-    
-    // for(var i = pathArr.length-1; i >=0; i-=10 ){
-    //   console.log(pathArr[i])
-    //   //((1000*limitDistance)/3963.2)/1609
-    //   //const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat],  1] } } }
-    //   const query = {geometry: {$geoWithin: {$centerSphere: [[pathArr[i].lng,pathArr[i].lat],  ((1000*limitDistance)/3963.2)/1609] } } }
-    //   const documents = await collection.find(query, options).toArray();
-    //   console.log(documents)
-    //   for(var j = 0; j < documents.length; j++){
-    //     resultMap.set(documents[j].place_id, documents[j])
-    //   }
-      
-    // }
-    // console.log(resultMap)
     let result = {
       nearbys: nearbyArr,
       paths: pathObjectArr
     }
 
-    // console.log(result.nearbys)
     return result
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     await mongoClient.close();
   }
 
@@ -164,5 +157,5 @@ const nearbyPoints = async (originLat, originLng, destLat, destLng, limitDistanc
 }
 
 module.exports = {
-  nearbyPoints:nearbyPoints
+  nearbyPoints: nearbyPoints
 }
